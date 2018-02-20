@@ -6,7 +6,6 @@
 gst-launch-1.0 videotestsrc ! pngenc ! filesink location=foo.png
 ```
 
-
 ### Capture an image as jpeg
 
 ```
