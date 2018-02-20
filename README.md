@@ -7,6 +7,7 @@ This series of docs provides a cheat sheet for Gstreamer on the command-line.
 * [Test streams](test_streams.md)
 * [Basics](basics.md)
 * [RTMP](rtmp.md)
+* [Mixing video](mixing.md)
 
 ## Sources and references
 
