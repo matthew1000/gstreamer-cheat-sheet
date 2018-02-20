@@ -24,7 +24,7 @@ gst-launch-1.0 uridecodebin uri='https://rtmp.api.rt.com/hls/rtdru360.m3u8' ! \
     autovideosink
 ```
 
-### Stream TO an RTMP server
+### Stream TO an RTMP server
 
 At the path '/live/x', with the server name in the environment variable `RTMP_SERVER`:
 

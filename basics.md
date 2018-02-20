@@ -14,7 +14,7 @@ or another way
 gst-launch-1.0 filesrc location=/Users/clarkm22/workspace/silver/assets/20160920-184500-danger-mouse-h264lg.mp4 ! qtdemux name=demux  demux.audio_0 ! queue ! decodebin ! audioconvert ! audioresample ! autoaudiosink   demux.video_0 ! queue ! decodebin ! videoconvert ! videoscale ! autovideosink
 ```
 
-# Play a video (no audio)
+### Play a video (no audio)
 
 ```
 gst-launch-1.0 -v uridecodebin uri="file:///Users/clarkm22/workspace/silver/assets/20160920-184500-danger-mouse-h264lg.mp4" ! autovideosink
@@ -55,13 +55,13 @@ gst-launch-1.0 -v filesrc location="/Users/clarkm22/workspace/silver/assets/2016
 
 Try also ‘rippletv’, ‘streaktv’, ‘radioactv’, ‘optv’, ‘quarktv’, ‘revtv’, ‘shagadelictv’, ‘warptv’ (I like), ‘dicetv’, ‘agingtv’ (great), ‘edgetv’ (could be great on real stuff)
 
-## Resize video
+### Resize video
 
 ```
 gst-launch-1.0 -v filesrc location="/Users/clarkm22/workspace/silver/assets/20160920-184500-danger-mouse-h264lg.mp4" ! decodebin ! videoconvert ! videoscale ! video/x-raw,width=100 ! autovideosink
 ```
 
-Change framerate
+### Change framerate
 
 ```
 gst-launch-1.0 -v filesrc location="/Users/clarkm22/workspace/silver/assets/20160920-184500-danger-mouse-h264lg.mp4" ! decodebin ! videoconvert !  videorate ! video/x-raw,framerate=5/1  ! autovideosink
@@ -76,7 +76,7 @@ gst-launch-1.0 -v \
     autovideosink
 ```
 
-## Picture in picture
+### Picture in picture
 
 ```
 gst-launch-1.0   \
