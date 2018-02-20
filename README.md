@@ -8,6 +8,7 @@ This series of docs provides a cheat sheet for Gstreamer on the command-line.
 * [Basics](basics.md)
 * [RTMP](rtmp.md)
 * [Mixing video](mixing.md)
+* [Capturing images](capturing_images.md)
 
 ## Sources and references
 
