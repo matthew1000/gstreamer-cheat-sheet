@@ -30,6 +30,8 @@ Markdown | Less | Pretty
 
 There are multiple test patterns available, such as
 
+| Pattern        | Example           |
+| ------------- |:-------------:|
 | `videotestsrc pattern=snow`  | ![](images/test_snow.png) |
 | `videotestsrc pattern=red` (and blue and green) | !(images/test_red.png) |
 | `videotestsrc pattern=red` (and blue and green) | !(images/test_red.png) |
