@@ -10,6 +10,8 @@ export SRC=/home/me/videos/test.mp4
 
 ### Play a video (with audio)
 
+
+
 ```
 gst-launch-1.0 -v playbin uri=file://$SRC
 ```
@@ -18,7 +20,7 @@ or, if you'd rather have more control of the pipeline:
 
 ```
 gst-launch-1.0 filesrc location=$SRC ! \
-    qtdemux name=demux  demux.audio_0 ! queue ! decodebin ! audioconvert ! audioresample ! \
+        qtdemux name=demux  demux.audio_0 ! queue ! decodebin ! audioconvert ! audioresample ! \
     autoaudiosink \
     demux.video_0 ! queue ! \
     decodebin ! videoconvert ! videoscale ! autovideosink

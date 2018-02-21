@@ -17,3 +17,8 @@ This series of docs provides a cheat sheet for Gstreamer on the command-line.
 * [List of all Gstreamer plugins](https://gstreamer.freedesktop.org/documentation/plugins.html)
 * [Handy elements](https://gstreamer.freedesktop.org/documentation/tutorials/basic/handy-elements.html#uridecodebin)
 
+## Other cheat sheets
+
+* http://wiki.oz9aec.net/index.php/Gstreamer_cheat_sheet
+* https://github.com/xmementoit/gstreamerCheatsheet/blob/master/README.md
+
