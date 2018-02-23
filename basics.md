@@ -10,17 +10,25 @@ export SRC=/home/me/videos/test.mp4
 
 ### Play a video (with audio)
 
-
+`playbin` is a magical element that can play anything:
 
 ```
-gst-launch-1.0 -v playbin uri=file://$SRC
+gst-launch-1.0 playbin uri=file://$SRC
 ```
 
-or, if you'd rather have more control of the pipeline:
+This works with video, audio, RTMP streams, and so much more.
+
+The 'bin' in 'playbin' means that under-the-hood, it's a collection of elements. For example, we can achieve the same thing by going to the next level of elements, which separate the decoding part from the playing part:
+
+```
+gst-launch-1.0 filesrc location=$SRC ! decodebin ! playsink
+```
+
+Or, we can split down even further:
 
 ```
 gst-launch-1.0 filesrc location=$SRC ! \
-        qtdemux name=demux  demux.audio_0 ! queue ! decodebin ! audioconvert ! audioresample ! \
+    qtdemux name=demux  demux.audio_0 ! queue ! decodebin ! audioconvert ! audioresample ! \
     autoaudiosink \
     demux.video_0 ! queue ! \
     decodebin ! videoconvert ! videoscale ! autovideosink
@@ -88,3 +96,4 @@ gst-launch-1.0 -v \
     decodebin ! videoconvert ! videoscale ! video/x-raw,width=100 ! videorate ! video/x-raw,framerate=5/1  ! \
     autovideosink
 ```
+
