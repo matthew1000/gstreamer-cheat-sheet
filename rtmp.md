@@ -44,7 +44,7 @@ gst-launch-1.0 rtmpsrc location=$RTMP_SRC ! \
     flvdemux name=t  t.audio ! decodebin ! autoaudiosink
 ```
 
-Incidentally, all of these work with a direct flv file:
+Incidentally, all of these work with a direct *flv* file:
 
 ```
 gst-launch-1.0 filesrc location="/Users/clarkm22/workspace/silver/assets/test.flv" ! \
@@ -68,4 +68,82 @@ gst-launch-1.0 -e rtmpsrc location="$RTMP_SRC" ! \
     demux.audio ! queue ! decodebin ! audioconvert ! faac bitrate=32000 ! mux. \
     demux.video ! queue ! decodebin ! videoconvert ! video/x-raw,format=I420 ! x264enc speed-preset=superfast tune=zerolatency psy-tune=grain sync-lookahead=5 bitrate=480 key-int-max=50 ref=2  ! mux. \
     mp4mux name=mux ! filesink location="out.mp4"
+```
+
+According to [this conversation](http://gstreamer-devel.966125.n4.nabble.com/flvdemux-working-sometimes-td4677796.html), the following also works, although personally I find it intermittent:
+
+```
+export QUEUE="queue max-size-time=0 max-size-bytes=0 max-size-buffers=0"
+
+gst-launch-1.0 \
+    rtmpsrc location="$RTMP_SRC live=1" ! \
+    $QUEUE                          ! \
+    flvdemux name=demux             ! \
+    $QUEUE                          ! \
+    aacparse                        ! \
+    avdec_aac                       ! \
+    autoaudiosink sync=0 demux.video ! \
+    $QUEUE                          ! \
+    h264parse                       ! \
+    avdec_h264                      ! \
+    $QUEUE                          ! \
+    videoconvert                    ! \
+    autovideosink sync=0
+```
+
+### Adding an RTMP as picture-in-Picture
+
+This overlays an RTMP source as a picture-in-picture on top of a local filesource (set as `$SRC`)
+
+```
+gst-launch-1.0 \
+    filesrc location="$SRC" ! \
+    decodebin ! videoconvert ! \
+    videoscale ! video/x-raw,width=640,height=360 ! \
+    compositor name=mix sink_0::alpha=1 sink_1::alpha=1 sink_1::xpos=50 sink_1::ypos=50 !   \
+    videoconvert ! autovideosink \
+    rtmpsrc location="$RTMP_SRC" ! \
+    flvdemux name=demux \
+    demux.audio ! $QUEUE ! decodebin ! autoaudiosink \
+    demux.video ! $QUEUE ! decodebin ! \
+    videoconvert ! \
+    videoscale ! video/x-raw,width=320,height=180! \
+    mix.
+```
+
+
+## Sending to an RTMP server
+
+### Sending a test stream to an RTMP server
+
+This will send a test video source:
+
+```
+gst-launch-1.0 videotestsrc  is-live=true ! \
+    queue ! x264enc ! flvmux name=muxer ! rtmpsink location="$RTMP_DEST live=1"
+```
+
+This sends both video and audio as a test source:
+
+```
+gst-launch-1.0 videotestsrc is-live=true ! \
+    videoconvert ! x264enc bitrate=1000 tune=zerolatency ! video/x-h264 ! h264parse ! \
+    video/x-h264 ! queue ! flvmux name=mux ! \
+    rtmpsink location=$RTMP_DEST audiotestsrc is-live=true ! \
+    audioconvert ! audioresample ! audio/x-raw,rate=48000 ! \
+    voaacenc bitrate=96000 ! audio/mpeg ! aacparse ! audio/mpeg, mpegversion=4 ! mux.
+```
+
+### Send a file over RTMP
+
+```
+gst-launch-1.0 filesrc location=$SRC ! \
+    qtdemux name=demux \
+    demux.video_0 ! queue ! \
+    decodebin ! videoconvert ! x264enc bitrate=1000 tune=zerolatency ! video/x-h264 ! h264parse ! \
+    video/x-h264 ! queue ! flvmux name=mux ! \
+    rtmpsink location=$RTMP_DEST \
+    demux.audio_0 ! queue ! decodebin ! audioconvert ! audioresample ! \
+    audio/x-raw,rate=48000 ! \
+    voaacenc bitrate=96000 ! audio/mpeg ! aacparse ! audio/mpeg, mpegversion=4 ! mux.
 ```
