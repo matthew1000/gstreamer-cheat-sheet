@@ -52,8 +52,6 @@ gst-launch-1.0   \
     mix.
 ```
 
----
-
 Add audio by demuxing the inputs so it can be handled separately. This example does so on the first source (rather than mixing the two together):
 
 ```
