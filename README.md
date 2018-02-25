@@ -9,6 +9,7 @@ This series of docs provides a cheat sheet for Gstreamer on the command-line.
 * [RTMP](rtmp.md)
 * [Mixing video](mixing.md)
 * [Capturing images](capturing_images.md)
+* [Sending/receiving video from shared memory](memory_transfer.md)
 
 ## Sources and references
 
@@ -21,4 +22,22 @@ This series of docs provides a cheat sheet for Gstreamer on the command-line.
 
 * http://wiki.oz9aec.net/index.php/Gstreamer_cheat_sheet
 * https://github.com/xmementoit/gstreamerCheatsheet/blob/master/README.md
+
+## Interaction
+
+If you want to interact with GStreamer after it's started (e.g. respond to an event, or dynamically change a pipeline), the command-line GStreamer doesn't really cut it. Instead you have two options:
+
+* *[GStreamer Daemon (gstd)](https://github.com/RidgeRun/gstd-1.x)* - allows setting and updating via a TCP connection
+* *Develop using the GStreamer library*, in either [C](https://gstreamer.freedesktop.org/documentation/application-development/basics/helloworld.html), [Python](https://github.com/GStreamer/gst-python), or [C#/.NET](https://github.com/GStreamer/gstreamer-sharp)
+
+### Python with GStreamer
+
+Good GStreamer Python resources include:
+
+* [Python GStreamer Tutorial](http://brettviren.github.io/pygst-tutorial-org/pygst-tutorial.html)
+* [Function reference](http://lazka.github.io/pgi-docs/#GstApp-1.0)
+
+# Problems or suggestions with this guide?
+
+If you spot anything incorrect or incomplete, reports are welcome, either using [issues](issues) or [pull requests](pulls)
 
