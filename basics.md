@@ -97,3 +97,15 @@ gst-launch-1.0 -v \
     autovideosink
 ```
 
+Here's a more complete example, that keeps the audio, and changes the size and framerate:
+
+```
+gst-launch-1.0 filesrc location=$SRC ! \
+    qtdemux name=demux  demux.audio_0 ! queue ! decodebin ! audioconvert ! audioresample ! \
+    autoaudiosink \
+    demux.video_0 ! queue ! \
+    decodebin ! videoconvert ! videoscale ! videorate ! \
+    'video/x-raw, format=(string)I420,  width=(int)320, height=(int)240, framerate=(fraction)30/1' ! \
+    autovideosink
+```
+
