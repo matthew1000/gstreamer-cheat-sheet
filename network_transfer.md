@@ -70,8 +70,9 @@ To send both a video and audio test source (mixed together):
 
 ```
 gst-launch-1.0 \
-    videotestsrc ! x264enc ! muxer.  audiotestsrc ! avenc_ac3 ! \
-    muxer.  mpegtsmux name=muxer ! rtpmp2tpay ! udpsink host=127.0.0.1 port=7001
+    videotestsrc ! x264enc ! muxer. \
+    audiotestsrc ! avenc_ac3 ! muxer. \
+    mpegtsmux name=muxer ! rtpmp2tpay ! udpsink host=127.0.0.1 port=7001
 ```
 
 And to receive both video and audio together:
@@ -84,7 +85,15 @@ gst-launch-1.0 \
 
 ## TCP
 
-### Send and receive audio via TCP
+### Audio via TCP
+
+To send a test stream:
+
+```
+gst-launch-1.0 \
+    audiotestsrc ! \
+    avenc_ac3 ! mpegtsmux ! tcpserversink port=7001 host=0.0.0.0
+```
 
 To send a file:
 
@@ -100,7 +109,7 @@ And to receive:
 gst-launch-1.0 tcpclientsrc port=7001 host=0.0.0.0 ! decodebin ! autoaudiosink
 ```
 
-### Send and receive video via TCP
+### Video via TCP
 
 Test video stream:
 
@@ -161,3 +170,38 @@ gst-launch-1.0 \
 ```
 
 I struggle to get VLC to play this (through `tcp://localhost:7001`).
+
+### Audio and Video via TCP
+
+We can of course mux to send audio and video together.
+
+To send both audio and video test:
+
+```
+gst-launch-1.0 \
+    videotestsrc ! decodebin ! x264enc ! muxer. \
+    audiotestsrc ! avenc_ac3 ! muxer. \
+    mpegtsmux name=muxer ! \
+    tcpserversink port=7001 host=0.0.0.0 recover-policy=keyframe sync-method=latest-keyframe sync=false
+```
+
+To send audio and video of an MP4 file:
+(Note, quite a few `queue2` elements are required now... there's an explanation of why [here](http://gstreamer-devel.966125.n4.nabble.com/Simple-AV-pipeline-stuck-in-prerolling-state-mp4-h264-aac-td4656970.html).)
+
+```
+gst-launch-1.0 \
+    filesrc location=$SRC ! \
+    qtdemux name=demux \
+    demux.video_0 ! queue2 ! decodebin ! x264enc ! queue2 ! muxer. \
+    demux.audio_0 ! queue2 ! decodebin ! audioconvert ! audioresample ! avenc_ac3 ! queue2 ! muxer. \
+    mpegtsmux name=muxer ! \
+    tcpserversink port=7001 host=0.0.0.0 recover-policy=keyframe sync-method=latest-keyframe sync=false
+```
+
+To receive, either use VLC (`tcp://localhost:7001`) or this command:
+
+```
+gst-launch-1.0 \
+    tcpclientsrc host=127.0.0.1 port=7001 ! \
+    decodebin name=decoder ! autoaudiosink  decoder. ! autovideosink
+```
