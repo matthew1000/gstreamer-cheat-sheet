@@ -96,6 +96,7 @@ gst-launch-1.0 \
 This overlays an RTMP source as a picture-in-picture on top of a local filesource (set as `$SRC`)
 
 ```
+export QUEUE="queue max-size-time=0 max-size-bytes=0 max-size-buffers=0"
 gst-launch-1.0 \
     filesrc location="$SRC" ! \
     decodebin ! videoconvert ! \
@@ -110,7 +111,6 @@ gst-launch-1.0 \
     videoscale ! video/x-raw,width=320,height=180! \
     mix.
 ```
-
 
 ## Sending to an RTMP server
 
@@ -147,3 +147,27 @@ gst-launch-1.0 filesrc location=$SRC ! \
     audio/x-raw,rate=48000 ! \
     voaacenc bitrate=96000 ! audio/mpeg ! aacparse ! audio/mpeg, mpegversion=4 ! mux.
 ```
+
+---
+
+Can we work out why a bad RTMP brings down the other mix?
+
+```
+export QUEUE="queue max-size-time=0 max-size-bytes=0 max-size-buffers=0"
+gst-launch-1.0 \
+    filesrc location="$SRC2" ! \
+    decodebin ! videoconvert ! \
+    videoscale ! video/x-raw,width=640,height=360 ! \
+    compositor name=mix sink_0::alpha=1 sink_1::alpha=1 sink_1::xpos=50 sink_1::ypos=50 !   \
+    videoconvert ! autovideosink \
+    rtmpsrc location="$RTMP_DEST" ! \
+    flvdemux name=demux \
+    demux.audio ! $QUEUE ! decodebin ! fakesink \
+    demux.video ! $QUEUE ! decodebin ! \
+    videoconvert ! \
+    videoscale ! video/x-raw,width=320,height=180! \
+    mix.
+```
+
+
+

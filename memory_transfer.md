@@ -2,7 +2,7 @@
 
 The [`shmsink`](https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad/html/gst-plugins-bad-plugins-shmsink.html) element allows you to write video into shared memory, from which another gstreamer application can read it with [`shmsrc`](https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad/html/gst-plugins-bad-plugins-shmsrc.html).
 
-### Puttingn a stream into memory
+### Putting a stream into memory
 
 ```
 gst-launch-1.0 -v videotestsrc ! \

@@ -1,0 +1,163 @@
+# Transfer of audio/video via a network socket  (GStreamer command-line cheat sheet)
+
+GStreamer can send and receive audio and video via a network socket, using either UDP or TCP.
+
+*UDP* is faster but lossy - there is no attempt to resend lost network packets to it will fail if the network is not perfect. *TCP* acknowledges every network packet so is slower, but more reliable.
+
+## UDP
+
+### Audio via UDP
+
+To send an audio test source:
+
+```
+gst-launch-1.0 audiotestsrc ! avenc_ac3 ! mpegtsmux ! rtpmp2tpay ! udpsink host=127.0.0.1 port=7001
+```
+
+To send an audio file:
+
+```
+# Make sure $SRC is set to an audio file (e.g. an MP3 file)
+gst-launch-1.0 -v filesrc location=$AUDIO_SRC ! mpegaudioparse ! udpsink port=7001
+```
+
+And to receive audio:
+
+```
+gst-launch-1.0 udpsrc port=7001 ! decodebin ! autoaudiosink
+```
+
+### Video via UDP, as h264
+
+To send a test stream:
+
+```
+gst-launch-1.0 videotestsrc ! decodebin ! x264enc ! rtph264pay ! udpsink port=7001
+```
+
+Or to send a file (video or audio only, not both):
+
+```
+# Make sure $SRC is set to an video file (e.g. an MP4 file)
+gst-launch-1.0  filesrc location=$SRC ! decodebin ! x264enc ! rtph264pay ! udpsink port=7001
+```
+
+To receive:
+
+```
+gst-launch-1.0 \
+    udpsrc port=7001 caps = "application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, payload=(int)96" ! \
+    rtph264depay ! decodebin ! videoconvert ! autovideosink
+```
+
+### Video via UDP, as MPEG-2
+
+To send a video test source:
+
+```
+gst-launch-1.0 videotestsrc ! x264enc ! mpegtsmux ! rtpmp2tpay ! udpsink host=127.0.0.1 port=7001
+```
+
+To receive:
+
+```
+gst-launch-1.0 udpsrc port=7001 ! decodebin ! autovideosink
+```
+
+### Both video and audio
+
+To send both a video and audio test source (mixed together):
+
+```
+gst-launch-1.0 \
+    videotestsrc ! x264enc ! muxer.  audiotestsrc ! avenc_ac3 ! \
+    muxer.  mpegtsmux name=muxer ! rtpmp2tpay ! udpsink host=127.0.0.1 port=7001
+```
+
+And to receive both video and audio together:
+
+```
+gst-launch-1.0 \
+    udpsrc port=7001 caps="application/x-rtp" ! \
+    rtpmp2tdepay ! decodebin name=decoder ! autoaudiosink  decoder. ! autovideosink
+```
+
+## TCP
+
+### Send and receive audio via TCP
+
+To send a file:
+
+```
+# Make sure $SRC is set to an audio file (e.g. an MP3 file)
+gst-launch-1.0 -v filesrc location=$AUDIO_SRC ! \
+    mpegaudioparse ! tcpserversink port=7001 host=0.0.0.0
+```
+
+And to receive:
+
+```
+gst-launch-1.0 tcpclientsrc port=7001 host=0.0.0.0 ! decodebin ! autoaudiosink
+```
+
+### Send and receive video via TCP
+
+Test video stream:
+
+```
+gst-launch-1.0 videotestsrc ! \
+    decodebin ! x264enc ! mpegtsmux ! queue ! \
+    tcpserversink port=7001 host=127.0.0.1 recover-policy=keyframe sync-method=latest-keyframe sync=false
+```
+
+MP4 file (video only):
+
+```
+gst-launch-1.0 \
+    filesrc location=$SRC ! decodebin ! x264enc ! mpegtsmux ! queue ! \
+    tcpserversink host=127.0.0.1 port=7001 recover-policy=keyframe sync-method=latest-keyframe sync=false
+```
+
+To receive, either use VLC (`tcp://localhost:7001`) or this command:
+
+```
+gst-launch-1.0 \
+    tcpclientsrc host=127.0.0.1 port=7001 ! \
+    decodebin ! videoconvert ! autovideosink sync=false
+```
+
+### Stream and receive video via TCP, using Matroska
+
+Should you wish to use the Matroska container rather than MPEG, here are some examples.
+(The [Matroska FAQ](https://www.matroska.org/technical/guides/faq/index.html) nicely describes what it is, if you're interested.)
+
+To send a test stream:
+
+```
+gst-launch-1.0 \
+    videotestsrc is-live=true ! \
+    queue ! videoconvert ! x264enc byte-stream=true ! \
+    h264parse config-interval=1 ! queue ! matroskamux ! queue leaky=2 ! \
+    tcpserversink port=7001 host=0.0.0.0 recover-policy=keyframe sync-method=latest-keyframe sync=false
+```
+
+To send a file (video only):
+
+```
+# Make sure $SRC is set to an video file (e.g. an MP4 file)
+gst-launch-1.0 \
+    filesrc location=$SRC ! decodebin ! \
+    queue ! videoconvert ! x264enc byte-stream=true ! \
+    h264parse config-interval=1 ! queue ! matroskamux ! queue leaky=2 ! \
+    tcpserversink port=7001 host=0.0.0.0 recover-policy=keyframe sync-method=latest-keyframe sync=false
+```
+
+To receive:
+
+```
+gst-launch-1.0 \
+    tcpclientsrc host=0.0.0.0 port=7001 typefind=true do-timestamp=false ! \
+    matroskademux ! typefind ! avdec_h264 ! autovideosink
+```
+
+I struggle to get VLC to play this (through `tcp://localhost:7001`).
