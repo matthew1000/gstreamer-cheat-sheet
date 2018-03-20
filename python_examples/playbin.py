@@ -12,7 +12,7 @@ gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 import os
 
-Gst.init()
+Gst.init(None)
 mainloop = GObject.MainLoop()
 
 pipeline = Gst.ElementFactory.make("playbin", "player")
