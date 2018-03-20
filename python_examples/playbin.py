@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 #
+# Plays a file to screen.
+#
 # Make sure the environment variable SRC is set to a playable file
 # e.g.
 #   export SRC='/tmp/me.mp4'
@@ -13,9 +15,8 @@ import os
 Gst.init()
 mainloop = GObject.MainLoop()
 
-pl = Gst.ElementFactory.make("playbin", "player")
-pl.set_property('uri','file://'+os.environ['SRC'])
+pipeline = Gst.ElementFactory.make("playbin", "player")
+pipeline.set_property('uri','file://'+os.environ['SRC'])
 
-#running the playbin
-pl.set_state(Gst.State.PLAYING)
+pipeline.set_state(Gst.State.PLAYING)
 mainloop.run()

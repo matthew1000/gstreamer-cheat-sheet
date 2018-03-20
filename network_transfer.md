@@ -92,15 +92,18 @@ To send a test stream:
 ```
 gst-launch-1.0 \
     audiotestsrc ! \
-    avenc_ac3 ! mpegtsmux ! tcpserversink port=7001 host=0.0.0.0
+    avenc_ac3 ! mpegtsmux ! \
+    tcpserversink port=7001 host=0.0.0.0
 ```
 
 To send a file:
 
 ```
 # Make sure $SRC is set to an audio file (e.g. an MP3 file)
-gst-launch-1.0 -v filesrc location=$AUDIO_SRC ! \
-    mpegaudioparse ! tcpserversink port=7001 host=0.0.0.0
+gst-launch-1.0 \
+    filesrc location=$AUDIO_SRC ! \
+    mpegaudioparse ! \
+    tcpserversink port=7001 host=0.0.0.0
 ```
 
 And to receive:

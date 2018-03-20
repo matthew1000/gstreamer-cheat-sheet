@@ -70,5 +70,17 @@ gst-launch-1.0   \
     mix.
 ```
 
+### Compositor with just one sources
 
+It is possible for a compositor to have just one source. This example has the test source of a bouncing ball. It also has the audio test source included (muxed).
 
+```
+gst-launch-1.0   \
+    videotestsrc pattern=ball ! \
+    decodebin ! \
+    compositor name=mix sink_0::alpha=1 ! \
+    x264enc ! muxer. \
+    audiotestsrc ! avenc_ac3 ! muxer. \
+    mpegtsmux name=muxer ! queue ! \
+    tcpserversink host=127.0.0.1 port=7001 recover-policy=keyframe sync-method=latest-keyframe sync=false
+```

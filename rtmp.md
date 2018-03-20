@@ -136,6 +136,8 @@ gst-launch-1.0 videotestsrc is-live=true ! \
 
 ### Send a file over RTMP
 
+Audio & video:
+
 ```
 gst-launch-1.0 filesrc location=$SRC ! \
     qtdemux name=demux \
@@ -146,6 +148,17 @@ gst-launch-1.0 filesrc location=$SRC ! \
     demux.audio_0 ! queue ! decodebin ! audioconvert ! audioresample ! \
     audio/x-raw,rate=48000 ! \
     voaacenc bitrate=96000 ! audio/mpeg ! aacparse ! audio/mpeg, mpegversion=4 ! mux.
+```
+
+Just video:
+
+```
+gst-launch-1.0 filesrc location=$SRC ! \
+    qtdemux name=demux \
+    demux.video_0 ! queue ! \
+    decodebin ! videoconvert ! x264enc bitrate=1000 tune=zerolatency ! video/x-h264 ! h264parse ! \
+    video/x-h264 ! queue ! flvmux name=mux ! \
+    rtmpsink location=$RTMP_DEST
 ```
 
 ---
@@ -168,6 +181,3 @@ gst-launch-1.0 \
     videoscale ! video/x-raw,width=320,height=180! \
     mix.
 ```
-
-
-

@@ -109,3 +109,6 @@ gst-launch-1.0 filesrc location=$SRC ! \
     autovideosink
 ```
 
+### Play files back to back
+
+See (https://coaxion.net/blog/2014/08/concatenate-multiple-streams-gaplessly-with-gstreamer/)[https://coaxion.net/blog/2014/08/concatenate-multiple-streams-gaplessly-with-gstreamer/]

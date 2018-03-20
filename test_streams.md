@@ -6,12 +6,12 @@
 gst-launch-1.0 videotestsrc ! videoconvert ! autovideosink
 ```
 
-This should display the test pattern in a window, that looks a 
+This should display the test pattern in a window, that looks a
 bit like this:
 
 ![Test pattern window](images/test-pattern.png "Test pattern window")
 
-There are multiple test patterns available, such as
+There are multiple test patterns available, such as:
 
 | Pattern        | Example           |
 | ------------- |:-------------:|
@@ -23,12 +23,21 @@ There are multiple test patterns available, such as
 
 For the full list of patterns, see https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-base-plugins/html/gst-plugins-base-plugins-videotestsrc.html
 
+### Change the shape of a test pattern
+
+To change the width and/or height, pass width and height immediately afterwards, e.g.
+
+```
+gst-launch-1.0 -v videotestsrc pattern=snow ! video/x-raw,width=1280,height=720 ! autovideosink
+```
 
 ### Listen to a test audio (beep)
 
 ```
 gst-launch-1.0 audiotestsrc ! audioconvert ! autoaudiosink
 ```
+
+### View test pattern and hear test audio
 
 Combine both the test pattern and test audio:
 

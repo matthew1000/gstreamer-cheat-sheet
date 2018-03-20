@@ -39,7 +39,12 @@ Good GStreamer Python resources include:
 
 * [Getting started with GStreamer with Python](https://www.jonobacon.com/2006/08/28/getting-started-with-gstreamer-with-python/)
 * [Python GStreamer Tutorial](http://brettviren.github.io/pygst-tutorial-org/pygst-tutorial.html)
-* [Function reference](http://lazka.github.io/pgi-docs/#GstApp-1.0)
+* [Function reference](http://lazka.github.io/pgi-docs/#Gst-1.0)
+* [Nice example script](https://github.com/rabits/rstream/blob/master/rstream.py)
+
+### C++ with GStreamer
+
+My favourite reference is [Valadoc](https://valadoc.org/gstreamer-1.0/index.htm)
 
 # Problems or suggestions with this guide?
 
