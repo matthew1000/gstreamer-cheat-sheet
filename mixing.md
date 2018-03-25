@@ -89,7 +89,7 @@ gst-launch-1.0   \
     tcpserversink host=127.0.0.1 port=7001 recover-policy=keyframe sync-method=latest-keyframe sync=false
 ```
 
-## Mixing audio
+## Mixing audio
 
 Use the `audiomixer` element to mix audio. It replaces the `adder` element, which struggles under some circumstances (according to the [GStreamer 1.14 release notes](https://gstreamer.freedesktop.org/releases/1.14/)).
 
@@ -99,4 +99,4 @@ Mix to audio streams:
 gst-launch-1.0 audiotestsrc freq=100 ! audiomixer name=mix ! audioconvert ! alsasink audiotestsrc freq=500 ! mix.
 ```
 
-[This Python example(python_examples/audio_dynamic_add.py)] shows a dynamic equivalent of this example - the second test source is only mixed when the user presses Enter.
+[This Python example](python_examples/audio_dynamic_add.py) shows a dynamic equivalent of this example - the second test source is only mixed when the user presses Enter.

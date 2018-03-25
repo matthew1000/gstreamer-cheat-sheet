@@ -8,7 +8,7 @@ A few Python examples are also included for when you need GStreamer to be dynami
 * [Test streams](test_streams.md)
 * [Basics](basics.md)
 * [RTMP](rtmp.md)
-* [Mixing video](mixing.md)
+* [Mixing video & audio](mixing.md)
 * [Images](images.md)
 * [Capturing images](capturing_images.md)
 * [Sending/receiving video from shared memory](memory_transfer.md)
