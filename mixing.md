@@ -1,4 +1,8 @@
-# Mixing video (GStreamer command-line cheat sheet)
+# Mixing (GStreamer command-line cheat sheet)
+
+This page talks about mixing video (i.e. replacing or overlaying), and also mixing audio (i.e. replacing or merging audio tracks). We'll do one at a time.
+
+## Mixing video
 
 The element `compositor` allows video to be mixed (overlayed, put side-by-side, etc).
 
@@ -70,7 +74,7 @@ gst-launch-1.0   \
     mix.
 ```
 
-### Compositor with just one sources
+### Compositor with just one source
 
 It is possible for a compositor to have just one source. This example has the test source of a bouncing ball. It also has the audio test source included (muxed).
 
@@ -84,3 +88,15 @@ gst-launch-1.0   \
     mpegtsmux name=muxer ! queue ! \
     tcpserversink host=127.0.0.1 port=7001 recover-policy=keyframe sync-method=latest-keyframe sync=false
 ```
+
+## Mixing audio
+
+Use the `audiomixer` element to mix audio. It replaces the `adder` element, which struggles under some circumstances (according to the [GStreamer 1.14 release notes](https://gstreamer.freedesktop.org/releases/1.14/)).
+
+Mix to audio streams:
+
+```
+gst-launch-1.0 audiotestsrc freq=100 ! audiomixer name=mix ! audioconvert ! alsasink audiotestsrc freq=500 ! mix.
+```
+
+[This Python example(python_examples/audio_dynamic_add.py)] shows a dynamic equivalent of this example - the second test source is only mixed when the user presses Enter.

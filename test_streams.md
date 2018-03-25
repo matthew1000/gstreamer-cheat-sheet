@@ -1,5 +1,7 @@
 # Test streams (GStreamer command-line cheat sheet)
 
+## Video test streams
+
 ### Display a test pattern
 
 ```
@@ -31,13 +33,46 @@ To change the width and/or height, pass width and height immediately afterwards,
 gst-launch-1.0 -v videotestsrc pattern=snow ! video/x-raw,width=1280,height=720 ! autovideosink
 ```
 
+## Audio test streams
+
 ### Listen to a test audio (beep)
 
 ```
-gst-launch-1.0 audiotestsrc ! audioconvert ! autoaudiosink
+gst-launch-1.0 audiotestsrc ! autoaudiosink
 ```
 
-### View test pattern and hear test audio
+You can change the pitch using the `freq` property:
+
+```
+# This creates a higher beep:
+gst-launch-1.0 audiotestsrc freq=1000 ! autoaudiosink
+```
+
+The [mixing page](./mixing.md) shows how two different frequency audio test streams can be mixed together.
+
+You can change the *volume* by setting the `volume` property between `0` and `1`. E.g. for a quiet beep:
+
+```
+gst-launch-1.0 audiotestsrc volume=0.1 ! autoaudiosink
+```
+
+### White noise
+
+```
+gst-launch-1.0 audiotestsrc wave="white-noise" ! autoaudiosink
+```
+
+There are variations (e.g. _red noise_) - see the [docs](https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-base-plugins/html/gst-plugins-base-plugins-audiotestsrc.html) for a complete list.
+
+### Silence
+
+If you need an audio stream with nothing in:
+
+```
+gst-launch-1.0 audiotestsrc wave="silence" ! autoaudiosink
+```
+
+## Combining audio and video test streams
 
 Combine both the test pattern and test audio:
 
