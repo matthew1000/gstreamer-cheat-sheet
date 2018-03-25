@@ -1,6 +1,7 @@
 # GStreamer command-line cheat sheet
 
 This series of docs provides a cheat sheet for GStreamer on the command-line.
+A few Python examples are also included for when you need GStreamer to be dynamic (i.e. react to user or some other action).
 
 ## Contents
 
