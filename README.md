@@ -17,7 +17,7 @@ A few Python examples are also included for when you need GStreamer to be dynami
 ## Sources and references
 
 * [Basic command line reference](http://docs.gstreamer.com/display/GstSDK/Basic+tutorial+10%3A+GStreamer+tools)
-* [More examples here](http://docs.gstreamer.com/display/GstSDK/gst-launch)
+* [Pipeline examples](https://gstreamer.freedesktop.org/documentation/tools/gst-launch.html#pipeline-examples)
 * [List of all Gstreamer plugins](https://gstreamer.freedesktop.org/documentation/plugins.html)
 * [Handy elements](https://gstreamer.freedesktop.org/documentation/tutorials/basic/handy-elements.html#uridecodebin)
 
@@ -27,7 +27,7 @@ A few Python examples are also included for when you need GStreamer to be dynami
 * https://github.com/xmementoit/gstreamerCheatsheet/blob/master/README.md
 * https://gist.github.com/nebgnahz/26a60cd28f671a8b7f522e80e75a9aa5
 
-## Interaction
+## Interacting with the GStreamer pipeline
 
 If you want to interact with GStreamer after it's started (e.g. respond to an event, or dynamically change a pipeline), the command-line GStreamer doesn't really cut it. Instead you have two options:
 

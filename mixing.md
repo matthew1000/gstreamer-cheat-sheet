@@ -93,10 +93,35 @@ gst-launch-1.0   \
 
 Use the `audiomixer` element to mix audio. It replaces the `adder` element, which struggles under some circumstances (according to the [GStreamer 1.14 release notes](https://gstreamer.freedesktop.org/releases/1.14/)).
 
-Mix to audio streams:
+### Mix two (or more) test streams
 
 ```
-gst-launch-1.0 audiotestsrc freq=100 ! audiomixer name=mix ! audioconvert ! alsasink audiotestsrc freq=500 ! mix.
+gst-launch-1.0 \
+    audiomixer name=mix !  audioconvert ! autoaudiosink \
+    audiotestsrc freq=400 ! mix. \
+    audiotestsrc freq=600 ! mix.
 ```
+
+### Mix two test streams, dynamically
 
 [This Python example](python_examples/audio_dynamic_add.py) shows a dynamic equivalent of this example - the second test source is only mixed when the user presses Enter.
+
+### Mix two (or more) MP3 files
+
+```
+gst-launch-1.0 \
+    audiomixer name=mix !  audioconvert ! autoaudiosink \
+    filesrc location=$AUDIO_SRC  ! mpegaudioparse ! decodebin ! mix. \
+    filesrc location=$AUDIO_SRC2 ! mpegaudioparse ! decodebin ! mix.
+```
+
+### Mix a test stream with an MP3 file
+
+Because the audio streams are from different sources, they must each be passed through `audioconvert`.
+
+```
+gst-launch-1.0 \
+    audiomixer name=mix ! audioconvert ! autoaudiosink \
+    audiotestsrc is-live=true freq=400 ! audioconvert ! mix. \
+    filesrc location=$AUDIO_SRC ! mpegaudioparse ! decodebin ! audioconvert ! mix.
+```

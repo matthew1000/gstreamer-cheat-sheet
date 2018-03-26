@@ -109,6 +109,18 @@ gst-launch-1.0 filesrc location=$SRC ! \
     autovideosink
 ```
 
+### Play an MP3 audio file
+
+Set the environment variable `$AUDIO_SRC` to be the location of the MP3 file. Then:
+
+```
+# All three of these do the same thing:
+gst-launch-1.0 playbin uri=file://$AUDIO_SRC
+gst-launch-1.0 -v uridecodebin uri="file://$AUDIO_SRC" ! autoaudiosink
+gst-launch-1.0 -v filesrc location=$AUDIO_SRC ! mpegaudioparse ! decodebin ! autoaudiosink
+```
+
+
 ### Play files back to back
 
 See (https://coaxion.net/blog/2014/08/concatenate-multiple-streams-gaplessly-with-gstreamer/)[https://coaxion.net/blog/2014/08/concatenate-multiple-streams-gaplessly-with-gstreamer/]
