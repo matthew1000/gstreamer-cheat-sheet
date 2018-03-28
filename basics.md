@@ -84,6 +84,10 @@ gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! videoconvert ! videoscal
 
 ### Change framerate
 
+Changing framerate is quiet common, as the world does not have a consistent standard. Facebook Live wants 30fps, YouTube wants 30 or 60fps. There's a nice summary on the  [https://documentation.apple.com/en/finalcutpro/usermanual/index.html#chapter=D%26section=4%26tasks=true](Apple FCP site).
+
+Change framerate:
+
 ```
 gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! videoconvert !  videorate ! video/x-raw,framerate=5/1  ! autovideosink
 ```
