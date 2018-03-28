@@ -1,6 +1,10 @@
 # Mixing (GStreamer command-line cheat sheet)
 
-This page talks about mixing video (i.e. replacing or overlaying), and also mixing audio (i.e. replacing or merging audio tracks). We'll do one at a time.
+Page contents:
+
+* Mixing video (i.e. replacing or overlaying)
+* Mixing audio (i.e. replacing or merging audio tracks)
+* Mixing video & audio together
 
 ## Mixing video
 
@@ -124,4 +128,118 @@ gst-launch-1.0 \
     audiomixer name=mix ! audioconvert ! autoaudiosink \
     audiotestsrc is-live=true freq=400 ! audioconvert ! mix. \
     filesrc location=$AUDIO_SRC ! mpegaudioparse ! decodebin ! audioconvert ! mix.
+```
+
+## Mixing video & audio together
+
+### Mix two fake video sources and two fake audio Sources
+
+We use `compositor` to mix the video and `audiomixer` to mix the audio.
+
+This example combines two test video inputs and also two test audio inputs:
+
+```
+gst-launch-1.0 \
+    compositor name=videomix ! autovideosink \
+    audiomixer name=audiomix !  audioconvert ! autoaudiosink \
+    videotestsrc pattern=ball ! videomix. \
+    videotestsrc pattern=pinwheel ! videoscale ! video/x-raw,width=100 ! videomix. \
+    audiotestsrc freq=400 ! audiomix. \
+    audiotestsrc freq=600 ! audiomix.
+```
+
+The output looks like:
+
+![Pinwheel and ball](images/pinwheel_and_ball.png "Pinwheel and ball")
+
+The above example is simple because we didn't have to split or combine the audio and video.
+This example muxes the mixed audio & video together, and then outputs via TCP.
+
+```
+# View this in VLC with tcp://localhost:7001
+gst-launch-1.0 \
+    mpegtsmux name=mux ! \
+    tcpserversink port=7001 host=0.0.0.0 recover-policy=keyframe sync-method=latest-keyframe sync=false \
+    compositor name=videomix ! x264enc ! queue2 ! mux. \
+    audiomixer name=audiomix !  audioconvert ! audioconvert ! audioresample ! avenc_ac3 ! queue2 ! mux. \
+    videotestsrc pattern=ball ! videomix. \
+    videotestsrc pattern=pinwheel ! videoscale ! video/x-raw,width=100 ! videomix. \
+    audiotestsrc freq=400 ! audiomix. \
+    audiotestsrc freq=600 ! audiomix.
+```
+
+### Mix a AV file with fake video and audio
+
+This one puts a bouncing ball in the corner of a file:
+
+```
+gst-launch-1.0 \
+    compositor name=videomix ! autovideosink \
+    audiomixer name=audiomix !  audioconvert ! autoaudiosink \
+    filesrc location=$SRC ! qtdemux name=demux \
+    demux.video_0 ! queue2 ! decodebin ! videoconvert ! videoscale ! video/x-raw,width=640,height=360 ! videomix. \
+    demux.audio_0 ! queue2 ! decodebin ! audioconvert ! audioresample ! audiomix. \
+    videotestsrc pattern=ball ! videoscale ! video/x-raw,width=100,height=100 ! videomix. \
+    audiotestsrc freq=400 volume=0.1 ! audiomix.
+```
+
+and this one also muxes the video and audio together to be sent over TCP:
+
+```
+# View this in VLC with tcp://localhost:7001
+gst-launch-1.0 \
+    mpegtsmux name=mux ! \
+    tcpserversink port=7001 host=0.0.0.0 recover-policy=keyframe sync-method=latest-keyframe sync=false \
+    compositor name=videomix ! x264enc ! queue2 ! mux. \
+    audiomixer name=audiomix !  audioconvert ! audioconvert ! audioresample ! avenc_ac3 ! queue2 ! mux. \
+    filesrc location=$SRC ! qtdemux name=demux \
+    demux.video_0 ! queue2 ! decodebin ! videoconvert ! videoscale ! video/x-raw,width=640,height=360 ! videomix. \
+    demux.audio_0 ! queue2 ! decodebin ! audioconvert ! audioresample ! audiomix. \
+    videotestsrc pattern=ball ! videoscale ! video/x-raw,width=100,height=100 ! videomix. \
+    audiotestsrc freq=400 volume=0.1 ! audiomix.
+```
+
+This one uses `uridecodebin` which allows a wider range of inputs to be added:
+
+```
+gst-launch-1.0 \
+    compositor name=videomix ! autovideosink \
+    audiomixer name=audiomix !  audioconvert ! autoaudiosink \
+    uridecodebin uri=file://$SRC name=demux ! \
+    queue2 ! audioconvert ! audioresample ! audiomix. \
+    demux. ! queue2 ! decodebin ! videoconvert ! videoscale ! video/x-raw,width=640,height=360 ! videomix. \
+    videotestsrc pattern=ball ! videoscale ! video/x-raw,width=100,height=100 ! videomix. \
+    audiotestsrc freq=400 volume=0.1 ! audiomix.
+```
+
+And again, here's a version that muxes again to send to TCP:
+
+```
+# View this in VLC with tcp://localhost:7001
+gst-launch-1.0 \
+    mpegtsmux name=mux ! \
+    tcpserversink port=7001 host=0.0.0.0 recover-policy=keyframe sync-method=latest-keyframe sync=false \
+    compositor name=videomix ! x264enc ! queue2 ! mux. \
+    audiomixer name=audiomix ! audioconvert ! audioresample ! avenc_ac3 ! queue2 ! mux. \
+    uridecodebin uri=file://$SRC name=demux ! \
+    queue2 ! audioconvert ! audioresample ! audiomix. \
+    demux. ! queue2 ! decodebin ! videoconvert ! videoscale ! video/x-raw,width=640,height=360 ! videomix. \
+    videotestsrc pattern=ball ! videoscale ! video/x-raw,width=100,height=100 ! videomix. \
+    audiotestsrc freq=400 volume=0.2 ! audiomix.
+```
+
+### Mix two AV files
+
+This does picture-in-picture, with the audio from both files included.
+
+```
+gst-launch-1.0 \
+    compositor name=videomix ! autovideosink \
+    audiomixer name=audiomix !  audioconvert ! autoaudiosink \
+    uridecodebin uri=file://$SRC name=demux1 ! \
+    queue2 ! audioconvert ! audioresample ! audiomix. \
+    demux1. ! queue2 ! decodebin ! videoconvert ! videoscale ! video/x-raw,width=640,height=360 ! videomix. \
+    uridecodebin uri=file://$SRC2 name=demux2 ! \
+    queue2 ! audioconvert ! audioresample ! audiomix. \
+    demux2. ! queue2 ! decodebin ! videoconvert ! videoscale ! video/x-raw,width=320,height=180 ! videomix.
 ```
