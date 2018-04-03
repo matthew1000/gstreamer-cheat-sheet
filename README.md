@@ -11,6 +11,7 @@ A few Python examples are also included for when you need GStreamer to be dynami
 * [Mixing video & audio](mixing.md)
 * [Images](images.md)
 * [Capturing images](capturing_images.md)
+* [Sending to multiple destinations (tee)](tee.md)
 * [Sending/receiving video from shared memory](memory_transfer.md)
 * [Network transfer](network_transfer.md) (including how to send so that VLC can preview)
 
@@ -29,9 +30,10 @@ A few Python examples are also included for when you need GStreamer to be dynami
 
 ## Interacting with the GStreamer pipeline
 
-If you want to interact with GStreamer after it's started (e.g. respond to an event, or dynamically change a pipeline), the command-line GStreamer doesn't really cut it. Instead you have two options:
+If you want to interact with GStreamer after it's started (e.g. respond to an event, or dynamically change a pipeline), the command-line GStreamer doesn't really cut it. Instead, here are some options:
 
 * *[GStreamer Daemon (gstd)](https://github.com/RidgeRun/gstd-1.x)* - allows setting and updating via a TCP connection
+* *[Snowmix](http://snowmix.sourceforge.net/) - an open-source live video mixer
 * *Develop using the GStreamer library*, in either [C](https://gstreamer.freedesktop.org/documentation/application-development/basics/helloworld.html), [Python](https://github.com/GStreamer/gst-python), or [C#/.NET](https://github.com/GStreamer/gstreamer-sharp)
 
 ### Python with GStreamer
