@@ -1,8 +1,10 @@
 # Test streams (GStreamer command-line cheat sheet)
 
-## Video test streams
+## Video test streams
 
-### Display a test pattern
+### Display a test pattern
+
+The `videotestsrc` element creates test patterns. Display locally like this:
 
 ```
 gst-launch-1.0 videotestsrc ! videoconvert ! autovideosink
@@ -37,6 +39,8 @@ gst-launch-1.0 -v videotestsrc pattern=snow ! video/x-raw,width=1280,height=720 
 
 ### Listen to a test audio (beep)
 
+The element `audiotestsrc` can make a variety of test sounds:
+
 ```
 gst-launch-1.0 audiotestsrc ! autoaudiosink
 ```
@@ -57,6 +61,8 @@ gst-launch-1.0 audiotestsrc volume=0.1 ! autoaudiosink
 ```
 
 ### White noise
+
+Set `wave` to `white-noise`:
 
 ```
 gst-launch-1.0 audiotestsrc wave="white-noise" ! autoaudiosink

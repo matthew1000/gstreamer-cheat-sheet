@@ -97,7 +97,9 @@ gst-launch-1.0   \
 
 Use the `audiomixer` element to mix audio. It replaces the `adder` element, which struggles under some circumstances (according to the [GStreamer 1.14 release notes](https://gstreamer.freedesktop.org/releases/1.14/)).
 
-### Mix two (or more) test streams
+### Mix two (or more) test audio streams
+
+Here we use two different frequencies (tones):
 
 ```
 gst-launch-1.0 \
@@ -111,6 +113,8 @@ gst-launch-1.0 \
 [This Python example](python_examples/audio_dynamic_add.py) shows a dynamic equivalent of this example - the second test source is only mixed when the user presses Enter.
 
 ### Mix two (or more) MP3 files
+
+Ensure `$AUDIO_SRC` and `$AUDIO_SRC2` environment variables are set to mp3 files.
 
 ```
 gst-launch-1.0 \

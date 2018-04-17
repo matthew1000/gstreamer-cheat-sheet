@@ -1,12 +1,16 @@
 # Capturing images (GStreamer command-line cheat sheet)
 
-### Capture an image as png
+### Capture an image as PNG
+
+The `pngenc` element can create a single PNG:
 
 ```
 gst-launch-1.0 videotestsrc ! pngenc ! filesink location=foo.png
 ```
 
-### Capture an image as jpeg
+### Capture an image as JPEG
+
+The `jpegenc` element can create a single JPEG:
 
 ```
 gst-launch-1.0 videotestsrc ! jpegenc ! filesink location=foo.jpg

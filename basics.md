@@ -10,7 +10,7 @@ export SRC=/home/me/videos/test.mp4
 
 ### Play a video (with audio)
 
-`playbin` is a magical element that can play anything:
+The magical element `playbin` can play anything:
 
 ```
 gst-launch-1.0 playbin uri=file://$SRC

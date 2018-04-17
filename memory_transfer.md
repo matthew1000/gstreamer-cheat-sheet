@@ -4,6 +4,8 @@ The [`shmsink`](https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-pl
 
 ### Putting a stream into memory
 
+Put a test video source into memory:
+
 ```
 gst-launch-1.0 -v videotestsrc ! \
     'video/x-raw, format=(string)I420,  width=(int)320, height=(int)240, framerate=(fraction)30/1' ! \
@@ -26,10 +28,10 @@ gst-launch-1.0 filesrc location=$SRC ! \
 
 ### Reading a stream from memory
 
+This will display the video of a stream locally:
+
 ```
 gst-launch-1.0 shmsrc socket-path=/tmp/tmpsock ! \
     'video/x-raw, format=(string)I420, width=(int)320, height=(int)240, framerate=(fraction)30/1' ! \
     autovideosink
 ````
-
-
