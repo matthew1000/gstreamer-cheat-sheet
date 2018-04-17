@@ -76,6 +76,12 @@ gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! videoconvert ! vertigotv
 
 Try also ‘rippletv’, ‘streaktv’, ‘radioactv’, ‘optv’, ‘quarktv’, ‘revtv’, ‘shagadelictv’, ‘warptv’ (I like), ‘dicetv’, ‘agingtv’ (great), ‘edgetv’ (could be great on real stuff)
 
+### Add A clock
+
+```
+gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! clockoverlay font-desc="Sans, 48" ! videoconvert ! autovideosink
+```
+
 ### Resize video
 
 ```

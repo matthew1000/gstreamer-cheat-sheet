@@ -208,3 +208,46 @@ gst-launch-1.0 \
     tcpclientsrc host=127.0.0.1 port=7001 ! \
     decodebin name=decoder ! autoaudiosink  decoder. ! autovideosink
 ```
+
+
+## Previewing in a web browser using TCP
+
+I've successfully managed to send video to *Firefox*, but not *Chrome* or *Safari*.
+
+You'll need a HTML page with a video element, like [this one](./html_examples/tcp-receive.html)
+
+Then send video like this:
+
+```
+gst-launch-1.0 \
+        videotestsrc is-live=true ! queue ! \
+        videoconvert ! videoscale ! video/x-raw,width=320,height=180 ! \
+        clockoverlay shaded-background=true font-desc="Sans 38" ! \
+        theoraenc ! oggmux ! tcpserversink host=127.0.0.1 port=9090
+```
+
+Video and audio together:
+
+```
+gst-launch-1.0 \
+        videotestsrc is-live=true ! queue ! \
+        videoconvert ! videoscale ! video/x-raw,width=320,height=180 ! \
+        clockoverlay shaded-background=true font-desc="Sans 38" ! \
+        theoraenc ! queue2 ! mux. \
+        audiotestsrc ! audioconvert ! vorbisenc ! mux. \
+        oggmux name=mux ! tcpserversink host=127.0.0.1 port=9090
+```
+
+Play a source rather than test:
+
+```
+gst-launch-1.0 \
+    filesrc location=$SRC ! \
+    qtdemux name=demux \
+    demux.audio_0 ! queue ! decodebin ! vorbisenc ! muxer. \
+    demux.video_0 ! queue ! decodebin ! \
+    videoconvert ! videoscale ! video/x-raw,width=320,height=180 ! \
+    theoraenc ! muxer. \
+    oggmux name=muxer ! \
+    tcpserversink host=127.0.0.1 port=9090 recover-policy=keyframe sync-method=latest-keyframe
+```
