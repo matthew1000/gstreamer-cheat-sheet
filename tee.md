@@ -14,7 +14,7 @@ gst-launch-1.0 \
     t. ! queue ! videoconvert ! autovideosink
 ```
 
-## Tee to two different outputs
+## Tee to two different video outputs
 
 Here's an example that sends video to both `autovideosink` and a TCP server (`tcpserversink`).
 Note how `async=false` is required on both sinks, because the encoding step on the TCP branch takes longer, and so the timing will be different.
