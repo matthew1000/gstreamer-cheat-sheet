@@ -33,7 +33,7 @@ A few Python examples are also included for when you need GStreamer to be dynami
 If you want to interact with GStreamer after it's started (e.g. respond to an event, or dynamically change a pipeline), the command-line GStreamer doesn't really cut it. Instead, here are some options:
 
 * *[GStreamer Daemon (gstd)](https://github.com/RidgeRun/gstd-1.x)* - allows setting and updating via a TCP connection
-* *[Snowmix](http://snowmix.sourceforge.net/) - an open-source live video mixer
+* *[Snowmix](http://snowmix.sourceforge.net/)* - an open-source live video mixer
 * *Develop using the GStreamer library*, in either [C](https://gstreamer.freedesktop.org/documentation/application-development/basics/helloworld.html), [Python](https://github.com/GStreamer/gst-python), or [C#/.NET](https://github.com/GStreamer/gstreamer-sharp)
 
 ### Python with GStreamer
