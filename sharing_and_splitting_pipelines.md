@@ -74,11 +74,13 @@ gst-launch-1.0 shmsrc socket-path=/tmp/tmpsock ! \
 
 I've used `proxysink` and `proxysrc` to split large pipelines into smaller ones. That way, if a part fails, the rest can continue.
 
+
 ### gstproxy documentation
 
 * Introduced by the blog mentioned above (http://blog.nirbheek.in/2018/02/decoupling-gstreamer-pipelines.html)
 * Example code on proxysrc here: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad-plugins/html/gst-plugins-bad-plugins-proxysrc.html
 * Equivalent proxysink: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad-plugins/html/gst-plugins-bad-plugins-proxysink.html
+
 
 ### gstproxy examples
 
