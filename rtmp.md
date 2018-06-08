@@ -116,11 +116,21 @@ gst-launch-1.0 \
 
 ### Sending a test stream to an RTMP server
 
-This will send a test video source:
+This will send a video test source:
 
 ```
 gst-launch-1.0 videotestsrc  is-live=true ! \
     queue ! x264enc ! flvmux name=muxer ! rtmpsink location="$RTMP_DEST live=1"
+```
+
+This will send a audio test source (not `flvmux` is still required even though there is no muxing of audio & video):
+
+```
+gst-launch-1.0 audiotestsrc is-live=true ! \
+    audioconvert ! audioresample ! audio/x-raw,rate=48000 ! \
+    voaacenc bitrate=96000 ! audio/mpeg ! aacparse ! audio/mpeg, mpegversion=4 ! \
+    flvmux name=mux ! \
+    rtmpsink location=$RTMP_DEST
 ```
 
 This sends both video and audio as a test source:
@@ -163,7 +173,7 @@ gst-launch-1.0 filesrc location=$SRC ! \
 
 ---
 
-Can we work out why a bad RTMP brings down the other mix?
+TODO - Can we work out why a bad RTMP brings down the other mix?
 
 ```
 export QUEUE="queue max-size-time=0 max-size-bytes=0 max-size-buffers=0"
@@ -181,3 +191,7 @@ gst-launch-1.0 \
     videoscale ! video/x-raw,width=320,height=180! \
     mix.
 ```
+
+## Misc: latency
+
+There's a comment about reducing latency at https://lists.freedesktop.org/archives/gstreamer-devel/2018-June/068076.html

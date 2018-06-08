@@ -1,18 +1,20 @@
 # GStreamer command-line cheat sheet
 
 This series of docs provides a cheat sheet for GStreamer on the command-line.
-A few Python examples are also included for when you need GStreamer to be dynamic (i.e. react to user or some other action).
+
+A few Python examples are also [included](python_examples/) for when you need GStreamer to be dynamic (i.e. react to user or some other action).
 
 ## Contents
 
-* [Test streams](test_streams.md)
 * [Basics](basics.md)
+* [Test streams](test_streams.md)
 * [RTMP](rtmp.md)
 * [Mixing video & audio](mixing.md)
 * [Images](images.md)
+* [Queues](queues.md)
 * [Capturing images](capturing_images.md)
 * [Sending to multiple destinations (tee)](tee.md)
-* [Sending/receiving video from shared memory](memory_transfer.md)
+* [Sharing and receiving pipelines, including sending/receiving video from shared memory](sharing_and_splitting_pipelines.md)
 * [Network transfer](network_transfer.md) (including how to send so that VLC can preview)
 
 ## Sources and references
@@ -38,14 +40,18 @@ If you want to interact with GStreamer after it's started (e.g. respond to an ev
 
 ### Python with GStreamer
 
-Good GStreamer Python resources include:
+Python is an easy language, so it's no surprise that it's good way to develop using GStreamer.
+
+Some example scripts can be found in the [python_examples/](python_examples/) directory.
+
+Other good GStreamer Python resources that I've found:
 
 * [Getting started with GStreamer with Python](https://www.jonobacon.com/2006/08/28/getting-started-with-gstreamer-with-python/)
 * [Python GStreamer Tutorial](http://brettviren.github.io/pygst-tutorial-org/pygst-tutorial.html)
 * [Function reference](http://lazka.github.io/pgi-docs/#Gst-1.0)
 * [Nice example script](https://github.com/rabits/rstream/blob/master/rstream.py)
 
-### C++ with GStreamer
+### C/C++ with GStreamer
 
 My favourite reference is [Valadoc](https://valadoc.org/gstreamer-1.0/index.htm)
 

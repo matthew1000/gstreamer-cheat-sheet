@@ -29,7 +29,7 @@ gst-launch-1.0   \
     mix.
 ```
 
-Put a box around the in-picture using ‘videobox’ e.g.
+Put a box around the in-picture using `videobox` e.g.
 
 ```
 gst-launch-1.0   \

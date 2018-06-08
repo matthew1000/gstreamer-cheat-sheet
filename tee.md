@@ -1,6 +1,6 @@
 # Multiple outputs (tee)
 
-The `tee` command allows audio & video streams to be sent to more than one place.
+This page describes the `tee` element, which allows audio & video streams to be sent to more than one place.
 
 ## Tee to two local video outputs
 
