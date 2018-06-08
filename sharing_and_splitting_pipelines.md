@@ -22,15 +22,13 @@ _As with the rest of this site, this is a rough guide, and is probably not compl
 
 | Name | Description | Points to note | Further reading |
 | ---- | ----------- | -------------- | --------------- |
-| *shmsink and shmsrc* | Allows video to be read/written from shared memory | * Used to send/receive from Snowmix | See below |
+| *shmsink and shmsrc* | Allows video to be read/written from shared memory | Used to send/receive from Snowmix | See below |
 | *appsrc/appsink* | Allows video data to leave/enter the pipeline from your own application | n/a | https://thiblahute.github.io/GStreamer-doc/app-1.0/index.html?gi-language=c |
 | *fdsrc/fdsink* | Allows communication via a file descriptor | n/a | https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gstreamer-plugins/html/gstreamer-plugins-fdsrc.html |
-| *interpipe* | Allows simple communication between two or more independent pipelines. Very powerful. | * Not part of GStreamer (though it is open-source... I'm not sure why it's not been included) | * Well-documented at https://developer.ridgerun.com/wiki/index.php?title=GstInterpipe<br>
-* https://gstreamer.freedesktop.org/data/events/gstreamer-conference/2015/Melissa%20Montero%20-%20GST%20Daemon%20and%20Interpipes:%20A%20simpler%20way%20to%20get%20your%20applications%20done%20.pdf |
-| *inter* (intervideosink, etc) | Send/receive AV between two pipelines in the same process | Only support raw audio or video, and drop events and queries at the boundary (source: [Nirbheek's blog](http://blog.nirbheek.in/2018/02/decoupling-gstreamer-pipelines.html)) | * https://thiblahute.github.io/GStreamer-doc/inter-1.0/index.html?gi-language=c
-* Pros and cons discussed here: http://gstreamer-devel.966125.n4.nabble.com/How-to-connect-intervideosink-and-intervideosrc-for-IPC-pipelines-td4684567.html |
-| *ipcpipeline* | Allows communication between pipelines *in different processes*. | * Arrived with GStreamer 1.14 (Spring 2018) |  https://www.collabora.com/news-and-blog/blog/2017/11/17/ipcpipeline-splitting-a-gstreamer-pipeline-into-multiple-processes/ |
-| *gstproxy (proxysink and proxysrc)* | Send/receive AV between two pipelines in the same process. | * Arrived with GStreamer 1.14 (Spring 2018) | * See below
+| *interpipe* | Allows simple communication between two or more independent pipelines. Very powerful. | * Not part of GStreamer (though it is open-source... I'm not sure why it's not been included) | * Well-documented at https://developer.ridgerun.com/wiki/index.php?title=GstInterpipe<br>* https://gstreamer.freedesktop.org/data/events/gstreamer-conference/2015/Melissa%20Montero%20-%20GST%20Daemon%20and%20Interpipes:%20A%20simpler%20way%20to%20get%20your%20applications%20done%20.pdf |
+| *inter* (intervideosink, etc) | Send/receive AV between two pipelines in the same process | Only support raw audio or video, and drop events and queries at the boundary (source: [Nirbheek's blog](http://blog.nirbheek.in/2018/02/decoupling-gstreamer-pipelines.html)) | * https://thiblahute.github.io/GStreamer-doc/inter-1.0/index.html?gi-language=c<br>* Pros and cons discussed here: http://gstreamer-devel.966125.n4.nabble.com/How-to-connect-intervideosink-and-intervideosrc-for-IPC-pipelines-td4684567.html |
+| *ipcpipeline* | Allows communication between pipelines *in different processes*. | Arrived with GStreamer 1.14 (Spring 2018) |  https://www.collabora.com/news-and-blog/blog/2017/11/17/ipcpipeline-splitting-a-gstreamer-pipeline-into-multiple-processes/ |
+| *gstproxy (proxysink and proxysrc)* | Send/receive AV between two pipelines in the same process. | Arrived with GStreamer 1.14 (Spring 2018) | * See below
 * Introduced by the blog mentioned above (http://blog.nirbheek.in/2018/02/decoupling-gstreamer-pipelines.html)
 * Example code on proxysrc here: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad-plugins/html/gst-plugins-bad-plugins-proxysrc.html
 * Equivalent proxysink: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad-plugins/html/gst-plugins-bad-plugins-proxysink.html |
@@ -89,11 +87,11 @@ A very simple example would be:
 
 This would achieve the same as `audiotestsrc | autoaudiosink`, but in two pipelines.
 
-An Python example of this can be found at ['python_examples/gstproxy_01_audiotestsrc/py](/python_examples/gstproxy_01_audiotestsrc/py).
+An Python example of this can be found at [/python_examples/gstproxy_01_audiotestsrc.py](/python_examples/gstproxy_01_audiotestsrc.py).
 
 A slightly more interesting example can be found at
 
-[/python_examples/gstproxy_02_playbin/py](/python_examples/gstproxy_02_playbin/py). This plays a video file (e.g. mp4). It shows:
+[/python_examples/gstproxy_02_playbin.py](/python_examples/gstproxy_02_playbin.py). This plays a video file (e.g. mp4). It shows:
 
 * that `proxysink` can work with [`playbin`](https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-base-plugins/html/gst-plugins-base-plugins-playbin.html)
 * separate proxies for audio and video
