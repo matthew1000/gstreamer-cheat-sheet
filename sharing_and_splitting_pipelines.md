@@ -28,15 +28,13 @@ _As with the rest of this site, this is a rough guide, and is probably not compl
 | *interpipe* | Allows simple communication between two or more independent pipelines. Very powerful. | * Not part of GStreamer (though it is open-source... I'm not sure why it's not been included) | * Well-documented at https://developer.ridgerun.com/wiki/index.php?title=GstInterpipe<br>* https://gstreamer.freedesktop.org/data/events/gstreamer-conference/2015/Melissa%20Montero%20-%20GST%20Daemon%20and%20Interpipes:%20A%20simpler%20way%20to%20get%20your%20applications%20done%20.pdf |
 | *inter* (intervideosink, etc) | Send/receive AV between two pipelines in the same process | Only support raw audio or video, and drop events and queries at the boundary (source: [Nirbheek's blog](http://blog.nirbheek.in/2018/02/decoupling-gstreamer-pipelines.html)) | * https://thiblahute.github.io/GStreamer-doc/inter-1.0/index.html?gi-language=c<br>* Pros and cons discussed here: http://gstreamer-devel.966125.n4.nabble.com/How-to-connect-intervideosink-and-intervideosrc-for-IPC-pipelines-td4684567.html |
 | *ipcpipeline* | Allows communication between pipelines *in different processes*. | Arrived with GStreamer 1.14 (Spring 2018) |  https://www.collabora.com/news-and-blog/blog/2017/11/17/ipcpipeline-splitting-a-gstreamer-pipeline-into-multiple-processes/ |
-| *gstproxy (proxysink and proxysrc)* | Send/receive AV between two pipelines in the same process. | Arrived with GStreamer 1.14 (Spring 2018) | * See below
-* Introduced by the blog mentioned above (http://blog.nirbheek.in/2018/02/decoupling-gstreamer-pipelines.html)
-* Example code on proxysrc here: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad-plugins/html/gst-plugins-bad-plugins-proxysrc.html
-* Equivalent proxysink: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad-plugins/html/gst-plugins-bad-plugins-proxysink.html |
+| *gstproxy (proxysink and proxysrc)* | Send/receive AV between two pipelines in the same process. | Arrived with GStreamer 1.14 (Spring 2018) | See below |
 
 
 ## Sharing via memory - shmsink and shmsrc
 
 The [`shmsink`](https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad/html/gst-plugins-bad-plugins-shmsink.html) element allows you to write video into shared memory, from which another gstreamer application can read it with [`shmsrc`](https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad/html/gst-plugins-bad-plugins-shmsrc.html).
+
 
 ### Putting a stream into memory
 
@@ -75,6 +73,14 @@ gst-launch-1.0 shmsrc socket-path=/tmp/tmpsock ! \
 ## gstproxy (proxysink and proxysrc)
 
 I've used `proxysink` and `proxysrc` to split large pipelines into smaller ones. That way, if a part fails, the rest can continue.
+
+### gstproxy documentation
+
+* Introduced by the blog mentioned above (http://blog.nirbheek.in/2018/02/decoupling-gstreamer-pipelines.html)
+* Example code on proxysrc here: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad-plugins/html/gst-plugins-bad-plugins-proxysrc.html
+* Equivalent proxysink: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad-plugins/html/gst-plugins-bad-plugins-proxysink.html
+
+### gstproxy examples
 
 It's not possible to use them via the command-line, because you connect them by having the receiver (`proxysrc`) reference the sender (`proxysink`).
 
