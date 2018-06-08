@@ -11,14 +11,14 @@ gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 import os
 
-Gst.init()
+Gst.init(None)
 mainloop = GObject.MainLoop()
 
 pipeline =  Gst.Pipeline.new("pipe")
 
-videotestsrc = Gst.ElementFactory.make("videotestsrc", "videotestsrc")
-videoconvert = Gst.ElementFactory.make("videoconvert", "videoconvert")
-autovideosink = Gst.ElementFactory.make("autovideosink", "autovideosink")
+videotestsrc = Gst.ElementFactory.make("videotestsrc")
+videoconvert = Gst.ElementFactory.make("videoconvert")
+autovideosink = Gst.ElementFactory.make("autovideosink")
 
 pipeline.add(videotestsrc)
 pipeline.add(videoconvert)
