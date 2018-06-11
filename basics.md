@@ -1,5 +1,6 @@
 # Basics (GStreamer command-line cheat sheet)
 
+
 ## Playing content
 
 These examples assume that bash variable `SRC` to be set to a video file (e.g. an mp4 file). You can do this by, e.g.
@@ -7,6 +8,7 @@ These examples assume that bash variable `SRC` to be set to a video file (e.g. a
 ```
 export SRC=/home/me/videos/test.mp4
 ```
+
 
 ### Play a video (with audio)
 
@@ -34,6 +36,7 @@ gst-launch-1.0 filesrc location=$SRC ! \
     decodebin ! videoconvert ! videoscale ! autovideosink
 ```
 
+
 ### Play a video (no audio)
 
 ```
@@ -45,6 +48,7 @@ which could also have been done as:
 ```
 gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! autovideosink
 ```
+
 
 ### Play just the audio from a video
 
