@@ -12,9 +12,10 @@ A few Python examples are also [included](python_examples/) for when you need GS
 * [Mixing video & audio](mixing.md)
 * [Images](images.md)
 * [Queues](queues.md)
+* [Writing to files](writing_to_files.md)
 * [Capturing images](capturing_images.md)
 * [Sending to multiple destinations (tee)](tee.md)
-* [Sharing and receiving pipelines, including sending/receiving video from shared memory](sharing_and_splitting_pipelines.md)
+* [Sharing and receiving pipelines (including sending/receiving video from shared memory)](sharing_and_splitting_pipelines.md)
 * [Network transfer](network_transfer.md) (including how to send so that VLC can preview)
 
 ## Sources and references

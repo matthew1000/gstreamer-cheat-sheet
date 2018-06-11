@@ -2,7 +2,7 @@
 
 ## Playing content
 
-For these,set `SRC` to be e.g. an mp4 file., e.g.
+These examples assume that bash variable `SRC` to be set to a video file (e.g. an mp4 file). You can do this by, e.g.
 
 ```
 export SRC=/home/me/videos/test.mp4
@@ -130,7 +130,13 @@ gst-launch-1.0 -v uridecodebin uri="file://$AUDIO_SRC" ! autoaudiosink
 gst-launch-1.0 -v filesrc location=$AUDIO_SRC ! mpegaudioparse ! decodebin ! autoaudiosink
 ```
 
-
 ### Play files back to back
 
 See (https://coaxion.net/blog/2014/08/concatenate-multiple-streams-gaplessly-with-gstreamer/)[https://coaxion.net/blog/2014/08/concatenate-multiple-streams-gaplessly-with-gstreamer/]
+
+
+### Jumping to a certain point in a video/audio (seek/rewind/restart)
+
+As far as I know, this isn't possible on the command-line. But it is possible as code. Here is a simple Python example:
+
+[/python_examples/seeking.py](/python_examples/seeking.py)
