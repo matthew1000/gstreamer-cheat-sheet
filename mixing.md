@@ -255,3 +255,16 @@ gst-launch-1.0 \
     queue2 ! audioconvert ! audioresample ! audiomix. \
     demux2. ! queue2 ! decodebin ! videoconvert ! videoscale ! video/x-raw,width=320,height=180 ! videomix.
 ```
+
+## Fading
+It's often nicer to fade between sources than to abruptly cut betwen them. This can be done both with video (temporarily blending using alpha channel) or audio (lowering the volume of one whilst raising it on another).
+
+It's not possible to do this on the command line... alhough `alpha` and `volume` can be set, they can only be set to discrete values.
+
+Programatically, however, this is possible through [dynamically controlled parameters](https://gstreamer.freedesktop.org/documentation/application-development/advanced/dparams.html). With this, you tell GStreamer the 'from' and 'to' values (e.g. 0 and 1 to increase volume), and the time period to do it.
+
+See [`mix with fade.py`](python_examples/mix_with_fade.py) for a simple Python example.
+
+As a slightly richer example, [`mix_with_other_props.py`](python_examples/mix_with_other_props.py) shows how other properties, such as the image's position and size, can also be changed this way.
+
+

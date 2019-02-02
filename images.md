@@ -1,6 +1,13 @@
 # Images (GStreamer command-line cheat sheet)
 
+Images can be added to video.
+In addition, video can be converted into images.
+This page looks at both types.
+
+## Including images in video
+
 Gstreamer can show images on video using the `imagefreeze` element.
+
 
 ### Create a video from an image
 
@@ -29,3 +36,31 @@ gst-launch-1.0 \
     uridecodebin uri=$PIC ! videoscale ! video/x-raw, width=263, height=240 ! imagefreeze ! m.
 ```
 
+## Capturing video output as images
+
+### Capture an image as PNG
+
+The `pngenc` element can create a single PNG:
+
+```
+gst-launch-1.0 videotestsrc ! pngenc ! filesink location=foo.png
+```
+
+### Capture an image as JPEG
+
+The `jpegenc` element can create a single JPEG:
+
+```
+gst-launch-1.0 videotestsrc ! jpegenc ! filesink location=foo.jpg
+```
+
+### Capturing images every X seconds
+
+This example captures one frame every 3 seconds, and places it in files with the format `img00001.jpg`.
+It also displays the video (as the `tee` command sends the video to both `multifilesink` and `autovideosink`).
+To change the frequency, change the `framerate=1/3`.
+e.g. `framerate=2/1` would capture a frame twice a second.
+
+```
+gst-launch-1.0 -v videotestsrc is-live=true ! clockoverlay font-desc=\"Sans, 48\" ! videoconvert ! videorate ! video/x-raw,framerate=1/3 ! jpegenc ! multifilesink location=file-%02d.jpg
+```

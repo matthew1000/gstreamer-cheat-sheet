@@ -13,10 +13,11 @@ A few Python examples are also [included](python_examples/) for when you need GS
 * [Images](images.md)
 * [Queues](queues.md)
 * [Writing to files](writing_to_files.md)
-* [Capturing images](capturing_images.md)
 * [Sending to multiple destinations (tee)](tee.md)
 * [Sharing and receiving pipelines (including sending/receiving video from shared memory)](sharing_and_splitting_pipelines.md)
 * [Network transfer](network_transfer.md) (including how to send so that VLC can preview)
+* [RTP](rtp.md)
+* [SRT](srt.md)
 
 ## Sources and references
 
@@ -50,6 +51,7 @@ Other good GStreamer Python resources that I've found:
 * [Getting started with GStreamer with Python](https://www.jonobacon.com/2006/08/28/getting-started-with-gstreamer-with-python/)
 * [Python GStreamer Tutorial](http://brettviren.github.io/pygst-tutorial-org/pygst-tutorial.html)
 * [Function reference](http://lazka.github.io/pgi-docs/#Gst-1.0)
+ * Including a useful [mapping from C](https://lazka.github.io/pgi-docs/Gst-1.0/mapping.html)
 * [Nice example script](https://github.com/rabits/rstream/blob/master/rstream.py)
 
 ### C/C++ with GStreamer
@@ -59,3 +61,7 @@ My favourite reference is [Valadoc](https://valadoc.org/gstreamer-1.0/index.htm)
 # Problems or suggestions with this guide?
 
 If you spot anything incorrect or incomplete, reports are welcome, either using [issues](issues) or [pull requests](pulls)
+
+# My GStreamer project
+
+Creating this guide gave me enough GStreamer understanding to make [Brave](https://github.com/bbc/brave), a live video editor for the cloud.

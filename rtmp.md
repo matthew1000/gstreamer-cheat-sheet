@@ -6,7 +6,7 @@ If you need your own RTMP server, [the Nginx RTMP extension](https://github.com/
 
 ### Play an RTMP stream
 
-To play from RTMP server, playbin can be used (as with files and HLS streams):
+To play from RTMP server, playbin can be used (as with files, HLS streams, DASH streams, etc):
 
 ```
 gst-launch-1.0 playbin uri=$RTMP_SRC

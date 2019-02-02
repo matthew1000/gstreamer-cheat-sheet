@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Shows how two pipelines can be connected, using interaudiosink/interaudiosrc.
+# Shows how two pipelines can be connected, using interaudiosink/interaudiosrc.
 # (Search and replace 'audio' with 'video' to get a video example.)
 # It will output a test audio sound.
 import gi
