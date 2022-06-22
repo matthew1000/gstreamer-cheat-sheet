@@ -123,7 +123,7 @@ gst-launch-1.0 videotestsrc  is-live=true ! \
     queue ! x264enc ! flvmux name=muxer ! rtmpsink location="$RTMP_DEST live=1"
 ```
 
-This will send a audio test source (not `flvmux` is still required even though there is no muxing of audio & video):
+This will send a audio test source (note: `flvmux` is still required even though there is no muxing of audio & video):
 
 ```
 gst-launch-1.0 audiotestsrc is-live=true ! \
