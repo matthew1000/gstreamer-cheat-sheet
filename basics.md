@@ -8,7 +8,7 @@ These examples assume that bash variable `SRC` to be set to a video file (e.g. a
 export SRC=/home/me/videos/test.mp4
 ```
 
-### Play a video (with audio)
+### Play a video (with audio)
 
 The magical element `playbin` can play anything:
 
@@ -40,13 +40,13 @@ which could also have been done as:
 gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! autovideosink
 ```
 
-### Play just the audio from a video
+### Play just the audio from a video
 
 ```
 gst-launch-1.0 -v uridecodebin uri="file://$SRC" ! autoaudiosink
 ```
 
-### Visualise the audio:
+### Visualise the audio:
 
 ```
 gst-launch-1.0 filesrc location=$SRC ! qtdemux name=demux  demux.audio_0 ! queue ! decodebin ! audioconvert ! wavescope ! autovideosink
@@ -70,7 +70,7 @@ gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! videoconvert ! vertigotv
 
 Try also ‘rippletv’, ‘streaktv’, ‘radioactv’, ‘optv’, ‘quarktv’, ‘revtv’, ‘shagadelictv’, ‘warptv’ (I like), ‘dicetv’, ‘agingtv’ (great), ‘edgetv’ (could be great on real stuff)
 
-### Add a clock
+### Add a clock
 
 ```
 gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! clockoverlay font-desc="Sans, 48" ! videoconvert ! autovideosink
@@ -113,7 +113,7 @@ gst-launch-1.0 filesrc location=$SRC ! \
     autovideosink
 ```
 
-### Play an MP3 audio file
+### Play an MP3 audio file
 
 Set the environment variable `$AUDIO_SRC` to be the location of the MP3 file. Then:
 

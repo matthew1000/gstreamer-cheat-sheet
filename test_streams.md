@@ -60,7 +60,7 @@ You can change the *volume* by setting the `volume` property between `0` and `1`
 gst-launch-1.0 audiotestsrc volume=0.1 ! autoaudiosink
 ```
 
-### White noise
+### White noise
 
 Set `wave` to `white-noise`:
 
@@ -70,7 +70,7 @@ gst-launch-1.0 audiotestsrc wave="white-noise" ! autoaudiosink
 
 There are variations (e.g. _red noise_) - see the [docs](https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-base-plugins/html/gst-plugins-base-plugins-audiotestsrc.html) for a complete list.
 
-### Silence
+### Silence
 
 If you need an audio stream with nothing in:
 

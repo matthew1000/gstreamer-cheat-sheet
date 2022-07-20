@@ -5,7 +5,7 @@ The [`filesink`](https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gstre
 Note that, when using the command-line, the `-e` parameter ensures the output file is correctly completed on exit.
 
 
-### Write to an mp4 file
+### Write to an mp4 file
 
 This example creates a test video (animated ball moving, with clock), and writes it as an MP4 file.
 Also added is an audio test source - a short beep every second.

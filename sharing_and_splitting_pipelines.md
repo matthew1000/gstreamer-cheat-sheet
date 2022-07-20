@@ -77,7 +77,7 @@ I've used `proxysink` and `proxysrc` to split larger pipelines into smaller ones
 Unlike _inter_ below, _proxy_ will keep timing in sync. This is great if it's what you want... but if you want pipelines to have their own timing, it might not be right for your needs..
 
 
-### gstproxy documentation
+### gstproxy documentation
 
 * Introduced by the blog mentioned above (http://blog.nirbheek.in/2018/02/decoupling-gstreamer-pipelines.html)
 * Example code on proxysrc here: https://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-bad-plugins/html/gst-plugins-bad-plugins-proxysrc.html
@@ -108,7 +108,7 @@ A slightly more interesting example can be found at
 * that when the video ends, the other pipelines continue.
 
 
-## inter (intervideosink/intervideosrc and their audio & subtitle counterparts)
+## inter (intervideosink/intervideosrc and their audio & subtitle counterparts)
 
 The 'inter' versions of 'proxy' are dumber. They don't attempt to sync timings. But this can be useful if you want pipelines to be more independent. (Pros and cons on this discussed [here](http://gstreamer-devel.966125.n4.nabble.com/How-to-connect-intervideosink-and-intervideosrc-for-IPC-pipelines-td4684567.html).)
 

@@ -144,7 +144,7 @@ gst-launch-1.0 videotestsrc is-live=true ! \
     voaacenc bitrate=96000 ! audio/mpeg ! aacparse ! audio/mpeg, mpegversion=4 ! mux.
 ```
 
-### Send a file over RTMP
+### Send a file over RTMP
 
 Audio & video:
 

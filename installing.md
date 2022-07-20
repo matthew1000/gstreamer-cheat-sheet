@@ -40,7 +40,7 @@ You can also compile and install yourself - see (https://gstreamer.freedesktop.o
 
 The GStreamer APT packages are excellent. 
 
-For a good install command, see `https://gstreamer.freedesktop.org/documentation/installing/on-linux.html?gi-language=c`.
+For a good install command, see (https://gstreamer.freedesktop.org/documentation/installing/on-linux.html?gi-language=c).
 
 
 

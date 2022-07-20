@@ -98,7 +98,7 @@ gst-launch-1.0   \
 Use the `audiomixer` element to mix audio. It replaces the `adder` element, which struggles under some circumstances (according to the [GStreamer 1.14 release notes](https://gstreamer.freedesktop.org/releases/1.14/)).
 
 
-### Mix two (or more) test audio streams
+### Mix two (or more) test audio streams
 
 Here we use two different frequencies (tones):
 
@@ -110,7 +110,7 @@ gst-launch-1.0 \
 ```
 
 
-### Mix two test streams, dynamically
+### Mix two test streams, dynamically
 
 [This Python example](python_examples/audio_dynamic_add.py) shows a dynamic equivalent of this example - the second test source is only mixed when the user presses Enter.
 
@@ -127,7 +127,7 @@ gst-launch-1.0 \
 ```
 
 
-### Mix a test stream with an MP3 file
+### Mix a test stream with an MP3 file
 
 Because the audio streams are from different sources, they must each be passed through `audioconvert`.
 
@@ -139,7 +139,7 @@ gst-launch-1.0 \
 ```
 
 
-## Mixing video & audio together
+## Mixing video & audio together
 
 
 ### Mix two fake video sources and two fake audio Sources
@@ -256,7 +256,7 @@ gst-launch-1.0 \
     demux2. ! queue2 ! decodebin ! videoconvert ! videoscale ! video/x-raw,width=320,height=180 ! videomix.
 ```
 
-## Fading
+## Fading
 It's often nicer to fade between sources than to abruptly cut betwen them. This can be done both with video (temporarily blending using alpha channel) or audio (lowering the volume of one whilst raising it on another).
 
 It's not possible to do this on the command line... alhough `alpha` and `volume` can be set, they can only be set to discrete values.

@@ -83,13 +83,13 @@ gst-launch-1.0 \
     rtpmp2tdepay ! decodebin name=decoder ! autoaudiosink  decoder. ! autovideosink
 ```
 
-### How to receive with VLC
+### How to receive with VLC
 
 To receive a UDP stream, an `sdp` file is required. An example can be found at https://gist.github.com/nebgnahz/26a60cd28f671a8b7f522e80e75a9aa5
 
 ## TCP
 
-### Audio via TCP
+### Audio via TCP
 
 To send a test stream:
 

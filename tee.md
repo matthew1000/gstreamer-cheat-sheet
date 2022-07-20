@@ -2,7 +2,7 @@
 
 This page describes the `tee` element, which allows audio & video streams to be sent to more than one place.
 
-## Tee to two local video outputs
+## Tee to two local video outputs
 
 Here's a simple example that sends shows video test source twice (using `autovideosink`)
 
@@ -14,7 +14,7 @@ gst-launch-1.0 \
     t. ! queue ! videoconvert ! autovideosink
 ```
 
-## Tee to two different video outputs
+## Tee to two different video outputs
 
 Here's an example that sends video to both `autovideosink` and a TCP server (`tcpserversink`).
 Note how `async=false` is required on both sinks, because the encoding step on the TCP branch takes longer, and so the timing will be different.
@@ -44,7 +44,7 @@ gst-launch-1.0 videotestsrc ! \
     t. ! queue ! x264enc ! mpegtsmux ! tcpserversink port=7001 host=127.0.0.1 recover-policy=keyframe sync-method=latest-keyframe
 ```
 
-## Tee on inputs
+## Tee on inputs
 
 You can also use `tee` in order to do multiple things with inputs. This example combines two audio visualisations:
 

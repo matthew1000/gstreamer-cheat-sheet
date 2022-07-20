@@ -22,7 +22,7 @@ gst-launch-1.0 videotestsrc ! queue ! autovideosink
 Queues add latency, so the general advice is not to add them unless you need them.
 
 
-## Queue2
+## Queue2
 
 Confusingly, `queue2` is not a replacement for `queue`. It's not obvious when to use one or the other.
 

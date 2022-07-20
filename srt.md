@@ -20,7 +20,7 @@ And create a receiver client like this:
 gst-launch-1.0 -v srtclientsrc uri="srt://127.0.0.1:8888" ! decodebin ! autovideosink
 ```
 
-## Server receiving the AV
+## Server receiving the AV
 
 To have the server receiving, rather than sending, swap 'srtclientsrc' for 'srcserversrc'.
 Likewise, to have the client sending rather than receiving, swap 'srtserversink' for 'srtclientsink'.

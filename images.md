@@ -46,7 +46,7 @@ The `pngenc` element can create a single PNG:
 gst-launch-1.0 videotestsrc ! pngenc ! filesink location=foo.png
 ```
 
-### Capture an image as JPEG
+### Capture an image as JPEG
 
 The `jpegenc` element can create a single JPEG:
 
