@@ -1,6 +1,5 @@
 # Basics (GStreamer command-line cheat sheet)
 
-
 ## Playing content
 
 These examples assume that bash variable `SRC` to be set to a video file (e.g. an mp4 file). You can do this by, e.g.
@@ -8,7 +7,6 @@ These examples assume that bash variable `SRC` to be set to a video file (e.g. a
 ```
 export SRC=/home/me/videos/test.mp4
 ```
-
 
 ### Play a video (with audio)
 
@@ -30,7 +28,6 @@ gst-launch-1.0 filesrc location=$SRC ! \
     decodebin ! videoconvert ! videoscale ! autovideosink
 ```
 
-
 ### Play a video (no audio)
 
 ```
@@ -42,7 +39,6 @@ which could also have been done as:
 ```
 gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! autovideosink
 ```
-
 
 ### Play just the audio from a video
 
@@ -66,7 +62,7 @@ gst-launch-1.0 filesrc location=$SRC ! decodebin ! tee name=t ! queue ! audiocon
 
 ### Add filters
 
-Go slightly mad:
+Here's the 'vertigo' filter:
 
 ```
 gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! videoconvert ! vertigotv ! autovideosink
@@ -74,7 +70,7 @@ gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! videoconvert ! vertigotv
 
 Try also ‘rippletv’, ‘streaktv’, ‘radioactv’, ‘optv’, ‘quarktv’, ‘revtv’, ‘shagadelictv’, ‘warptv’ (I like), ‘dicetv’, ‘agingtv’ (great), ‘edgetv’ (could be great on real stuff)
 
-### Add A clock
+### Add a clock
 
 ```
 gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! clockoverlay font-desc="Sans, 48" ! videoconvert ! autovideosink
@@ -88,7 +84,7 @@ gst-launch-1.0 -v filesrc location="$SRC" ! decodebin ! videoconvert ! videoscal
 
 ### Change framerate
 
-Changing framerate is quiet common, as the world does not have a consistent standard. Facebook Live wants 30fps, YouTube wants 30 or 60fps. There's a nice summary on the  [Apple FCP site](https://documentation.apple.com/en/finalcutpro/usermanual/index.html#chapter=D%26section=4%26tasks=true).
+Changing framerate is quiet common, as the world does not have a consistent standard. Facebook Live wants 30fps, for example. 
 
 Change framerate:
 

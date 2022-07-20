@@ -1,11 +1,15 @@
 # GStreamer command-line cheat sheet
 
-This series of docs provides a cheat sheet for GStreamer on the command-line.
+[GStreamer](https://gstreamer.freedesktop.org/) is a powerful library for manipulating audio and video - including live streams. This repo provides:
 
-A few Python examples are also [included](python_examples/) for when you need GStreamer to be dynamic (i.e. react to user or some other action).
+*  a cheat sheet for GStreamer on the command-line, and
+*  a few [Python examples](python_examples/). 
+
+Whilst the command line is great, programmatic usage (in Python or another language) allows you to dynamically manipulate the A/V streams.
 
 ## Contents
 
+* [Installing](installing.md)
 * [Basics](basics.md)
 * [Test streams](test_streams.md)
 * [RTMP](rtmp.md)
@@ -21,16 +25,15 @@ A few Python examples are also [included](python_examples/) for when you need GS
 
 ## Sources and references
 
-* [Basic command line reference](http://docs.gstreamer.com/display/GstSDK/Basic+tutorial+10%3A+GStreamer+tools)
+* [Basic command line reference](https://gstreamer.freedesktop.org/documentation/tutorials/basic/gstreamer-tools.html?gi-language=c)
 * [Pipeline examples](https://gstreamer.freedesktop.org/documentation/tools/gst-launch.html#pipeline-examples)
-* [List of all Gstreamer plugins](https://gstreamer.freedesktop.org/documentation/plugins.html)
+* [List of all Gstreamer plugins](https://gstreamer.freedesktop.org/documentation/plugins_doc.html?gi-language=c)
 * [Handy elements](https://gstreamer.freedesktop.org/documentation/tutorials/basic/handy-elements.html#uridecodebin)
 
 ## Other cheat-sheets
 
-* http://wiki.oz9aec.net/index.php/Gstreamer_cheat_sheet
-* https://github.com/xmementoit/gstreamerCheatsheet/blob/master/README.md
-* https://gist.github.com/nebgnahz/26a60cd28f671a8b7f522e80e75a9aa5
+* <https://github.com/xmementoit/gstreamerCheatsheet/blob/master/README.md>
+* <https://gist.github.com/nebgnahz/26a60cd28f671a8b7f522e80e75a9aa5>
 
 ## Interacting with the GStreamer pipeline
 
@@ -64,4 +67,4 @@ If you spot anything incorrect or incomplete, reports are welcome, either using 
 
 # My GStreamer project
 
-Creating this guide gave me enough GStreamer understanding to make [Brave](https://github.com/bbc/brave), a live video editor for the cloud.
+Creating this guide gave me enough GStreamer understanding to make a prototype [Brave](https://github.com/bbc/brave), a live video editor for the cloud. (Regrettably this prototype has not been updated in a few years.)
