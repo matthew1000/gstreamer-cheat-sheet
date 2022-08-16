@@ -2,7 +2,7 @@
 
 GStreamer can receive an RTMP stream from an RTMP server. It can also send an RTMP stream to an RTMP server.
 
-If you need your own RTMP server, [the Nginx RTMP extension](https://github.com/arut/nginx-rtmp-module) works quite well though is no longer supported.
+If you need your own RTMP server, [the Nginx RTMP extension](https://github.com/arut/nginx-rtmp-module) works quite well. [Linode has a good NGINX RTMP installation guide.](https://www.linode.com/docs/guides/set-up-a-streaming-rtmp-server/)
 
 ### Play an RTMP stream
 
@@ -47,7 +47,7 @@ gst-launch-1.0 rtmpsrc location=$RTMP_SRC ! \
 Incidentally, all of these work with a direct *flv* file:
 
 ```
-gst-launch-1.0 filesrc location="/Users/clarkm22/workspace/silver/assets/test.flv" ! \
+gst-launch-1.0 filesrc location="/path/to/test.flv" ! \
     flvdemux name=t  t.audio ! decodebin ! autoaudiosink
 ```
 
@@ -114,16 +114,40 @@ gst-launch-1.0 \
 
 ## Sending to an RTMP server
 
+The examples below use the `RTMP_DEST` environment variable. You can set it to reference your RTMP server, e.g.
+
+```
+export RTMP_DEST="rtmp://example.com/live/test"
+```
+
+If you're using [Nginx RTMP](https://github.com/arut/nginx-rtmp-module), the name you give your application needs to be the first part of the URL path. For example, if your NGINX configuration is:
+
+```
+rtmp {
+    server {
+        listen 1935;
+        hunk_size 4096;
+        notify_method get;
+
+        application livestream {
+            live on;
+        }
+    }
+}
+```
+
+then your URL will be `rtmp://your-domain.com/livestream/whatever-you-want`.
+
 ### Sending a test stream to an RTMP server
 
-This will send a video test source:
+To send a video test source:
 
 ```
 gst-launch-1.0 videotestsrc  is-live=true ! \
     queue ! x264enc ! flvmux name=muxer ! rtmpsink location="$RTMP_DEST live=1"
 ```
 
-This will send a audio test source (note: `flvmux` is still required even though there is no muxing of audio & video):
+To send an audio test source (note: `flvmux` is still required even though there is no muxing of audio & video):
 
 ```
 gst-launch-1.0 audiotestsrc is-live=true ! \
@@ -169,27 +193,6 @@ gst-launch-1.0 filesrc location=$SRC ! \
     decodebin ! videoconvert ! x264enc bitrate=1000 tune=zerolatency ! video/x-h264 ! h264parse ! \
     video/x-h264 ! queue ! flvmux name=mux ! \
     rtmpsink location=$RTMP_DEST
-```
-
----
-
-TODO - Can we work out why a bad RTMP brings down the other mix?
-
-```
-export QUEUE="queue max-size-time=0 max-size-bytes=0 max-size-buffers=0"
-gst-launch-1.0 \
-    filesrc location="$SRC2" ! \
-    decodebin ! videoconvert ! \
-    videoscale ! video/x-raw,width=640,height=360 ! \
-    compositor name=mix sink_0::alpha=1 sink_1::alpha=1 sink_1::xpos=50 sink_1::ypos=50 !   \
-    videoconvert ! autovideosink \
-    rtmpsrc location="$RTMP_DEST" ! \
-    flvdemux name=demux \
-    demux.audio ! $QUEUE ! decodebin ! fakesink \
-    demux.video ! $QUEUE ! decodebin ! \
-    videoconvert ! \
-    videoscale ! video/x-raw,width=320,height=180! \
-    mix.
 ```
 
 ## Misc: latency
