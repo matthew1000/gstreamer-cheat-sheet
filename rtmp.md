@@ -120,7 +120,7 @@ The examples below use the `RTMP_DEST` environment variable. You can set it to r
 export RTMP_DEST="rtmp://example.com/live/test"
 ```
 
-If you're using [Nginx RTMP](https://github.com/arut/nginx-rtmp-module), the name you give your application needs to be the first part of the URL path. For example, if your NGINX configuration is:
+If you're using [Nginx RTMP](https://github.com/arut/nginx-rtmp-module), the name configured for your application needs to be the first part of the URL path. For example, if your NGINX configuration is:
 
 ```
 rtmp {
@@ -136,7 +136,7 @@ rtmp {
 }
 ```
 
-then your URL will be `rtmp://your-domain.com/livestream/whatever-you-want`.
+then the application name is `livestream`, and so your URL will be `rtmp://<your-domain>/livestream/<stream-name>`.
 
 ### Sending a test stream to an RTMP server
 
