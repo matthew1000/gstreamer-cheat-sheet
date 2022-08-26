@@ -1,22 +1,23 @@
 # RTMP (GStreamer command-line cheat sheet)
 
-GStreamer can receive an RTMP stream from an RTMP server. It can also send an RTMP stream to an RTMP server.
+GStreamer can:
+* retrieve an RTMP stream from an RTMP server, and
+* also send an RTMP stream to an RTMP server (including YouTube).
 
 If you need your own RTMP server, [the Nginx RTMP extension](https://github.com/arut/nginx-rtmp-module) works quite well. [Linode has a good NGINX RTMP installation guide.](https://www.linode.com/docs/guides/set-up-a-streaming-rtmp-server/)
 
 ### Play an RTMP stream
 
-To play from RTMP server, playbin can be used (as with files, HLS streams, DASH streams, etc):
+RTMP can be live streams, or on-demand streams - playback is the same in both cases.
+
+To play from RTMP server, [playbin](https://gstreamer.freedesktop.org/documentation/playback/playbin.html) can be used. (Playbin is magical - it can also play files, HLS streams, DASH streams, and many other sources!) Example:
 
 ```
+export RTMP_SRC="rtmp://matthewc.co.uk/vod/scooter.flv"
 gst-launch-1.0 playbin uri=$RTMP_SRC
 ```
 
-A test RTMP stream is available at `rtmp://184.72.239.149/vod/BigBuckBunny_115k.mov` which serves as a useful example:
-
-```
-gst-launch-1.0 playbin uri='rtmp://184.72.239.149/vod/BigBuckBunny_115k.mov'
-```
+A test RTMP VOD stream is available at `rtmp://matthewc.co.uk/vod/scooter.flv` which serves as a useful example:
 
 Instead of using `playbin`, it's possible to get video only with `uridecodebin` then shown with `autovideosink`:
 
@@ -112,7 +113,7 @@ gst-launch-1.0 \
     mix.
 ```
 
-## Sending to an RTMP server
+## Sending a live stream to an RTMP server
 
 The examples below use the `RTMP_DEST` environment variable. You can set it to reference your RTMP server, e.g.
 
@@ -136,9 +137,9 @@ rtmp {
 }
 ```
 
-then the application name is `livestream`, and so your URL will be `rtmp://<your-domain>/livestream/<stream-name>`.
+then the application name is `livestream`, and so your URL will be `rtmp://<your-domain>/livestream/<stream-name>` (where `<stream-name> can be anything`).
 
-### Sending a test stream to an RTMP server
+### Sending a test live stream to an RTMP server
 
 To send a video test source:
 
@@ -166,6 +167,37 @@ gst-launch-1.0 videotestsrc is-live=true ! \
     rtmpsink location=$RTMP_DEST audiotestsrc is-live=true ! \
     audioconvert ! audioresample ! audio/x-raw,rate=48000 ! \
     voaacenc bitrate=96000 ! audio/mpeg ! aacparse ! audio/mpeg, mpegversion=4 ! mux.
+```
+
+### Live streaming to YouTube via RTMP
+
+YouTube accepts live RTMP streams. They must have both audio and video.
+
+Set up a stream by visiting [YouTube.com](https://www.youtube.com/) on desktop, and selecting 'Create' from the top-right.
+
+YouTube will provide a 'Stream URL' and a 'Stream key'. Combine these to create the full URL.
+
+For example, if the URL is `rtmp://a.rtmp.youtube.com/live2` and the key is `abcd-1234-5678`, then:
+
+```
+export RTMP_DEST="rtmp://a.rtmp.youtube.com/live2/abcd-1234-5678"
+```
+
+Given the  [YouTube stream suggestions](https://support.google.com/youtube/answer/2853702)) here's a good test stream:
+
+```
+gst-launch-1.0 \
+    videotestsrc is-live=1 \
+    ! videoconvert \
+    ! "video/x-raw, width=1280, height=720, framerate=30/1" \
+    ! queue \
+    ! x264enc cabac=1 bframes=2 ref=1 \
+    ! "video/x-h264,profile=main" \
+    ! flvmux streamable=true name=mux \
+    ! rtmpsink location="${RTMP_DEST} live=1" \
+    audiotestsrc is-live=1 wave=ticks \
+    ! voaacenc bitrate=128000 \
+    ! mux.
 ```
 
 ### Send a file over RTMP

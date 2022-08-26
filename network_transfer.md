@@ -4,6 +4,8 @@ GStreamer can send and receive audio and video via a network socket, using eithe
 
 *UDP* is faster but lossy - there is no attempt to resend lost network packets to it will fail if the network is not perfect. *TCP* acknowledges every network packet so is slower, but more reliable.
 
+See also [SRT](srt.md) as an alternative format.
+
 ## UDP
 
 ### Audio via UDP
