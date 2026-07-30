@@ -29,7 +29,7 @@ To create a sender server, use `srtsink` (or alternatively, `srtserversink`):
 gst-launch-1.0 -v videotestsrc ! video/x-raw, height=360, width=640 ! videoconvert ! x264enc tune=zerolatency ! video/x-h264, profile=high ! mpegtsmux ! srtsink uri=srt://:8888
 ```
 
-And then recieve with `srtsrc`  (or alternatively, `srtclientsrc`):
+And then receive with `srtsrc`  (or alternatively, `srtclientsrc`):
 
 ```
 gst-launch-1.0 -v srtsrc uri="srt://127.0.0.1:8888" ! decodebin ! autovideosink
